@@ -1,2 +1,2 @@
-# negative-selection-2018
-This repository will contain data and code accompanying the manuscript "Negative T cell selection on non-random peptides promotes robust self-nonself discrimination".
+# negative-selection-2020
+This repository will contain data and code accompanying the manuscript "Is T Cell Negative Selection a Learning Algorithm?".
