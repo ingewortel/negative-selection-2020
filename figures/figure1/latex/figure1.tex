@@ -1,0 +1,70 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%-------------------------FIGURE 1: TOLERANCE AND DISCRIMINATION--------------------------
+
+\begin{tikzpicture}[anchor=north west]
+%\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+%\filldraw[white] (0,0) rectangle (12,-0.1);
+
+\clip (0,0.5) rectangle (12,-3);
+
+\begin{scope}[yshift=0cm]
+ \node[anchor=north] at (3.3,0.45) {Complete negative selection:};
+ \node[anchor=north, align=center] at (1.95,-0) {
+ 	1. high tolerance and \\
+ 	
+ 	discrimination
+ };
+ \node[anchor=north, align=center] at (4.55,-0) {
+ 	2. high tolerance but \\
+ 	
+ 	no discrimination
+ };
+ 
+  \node[anchor=north] at (3.3,-2.3) {
+  ({\color{selfc}self}/{\color{hivc}foreign}) peptides
+  };
+ \node[rotate = 90, anchor = north] at (0.3,-1.5) {\# T cells};
+  \node[anchor = north west] at (0.5,-0.5) {\includegraphics[page=2]{../cartoons/tolerance-discrimination.pdf}};
+  \node[anchor = north west] at (3.1,-0.5) {\includegraphics[page=3]{../cartoons/tolerance-discrimination.pdf}};
+  
+  
+\end{scope}
+\begin{scope}[xshift=6cm,yshift=0cm]
+   \node[anchor=north] at (3.3,0.45) {Incomplete negative selection:};
+   \node[anchor=north, align=center] at (1.95,-0) {
+ 	3. low tolerance but \\
+ 	
+ 	high discrimination
+ };
+ \node[anchor=north, align=center] at (4.55,-0) {
+ 	4. low tolerance and \\
+ 	
+ 	low discrimination
+ };
+  \node[anchor=north] at (3.3,-2.3) {
+  ({\color{selfc}self}/{\color{hivc}foreign}) peptides
+  };
+ \node[rotate = 90, anchor = north] at (0.3,-1.5) {\# T cells};
+  \node[anchor = north west] at (0.5,-0.5) {\includegraphics[page=4]{../cartoons/tolerance-discrimination.pdf}};
+  \node[anchor = north west] at (3.1,-0.5) {\includegraphics[page=5]{../cartoons/tolerance-discrimination.pdf}};
+  
+ 
+\end{scope}
+
+
+\end{tikzpicture}
+\end{document}
