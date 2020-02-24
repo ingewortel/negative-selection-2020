@@ -7,5 +7,5 @@ latex-clean : | latex
 figure1.pdf : latex/figure1.pdf
 	cp $< $@
 
-latex/figure1.pdf : latex/figure1.tex cartoons/tolerance-discrimination.pdf
+latex/figure1.pdf : latex/figure1.tex ../shared-scripts/latex/latex-preamble.tex cartoons/tolerance-discrimination.pdf
 	cd latex && pdflatex figure1.tex
