@@ -142,4 +142,3 @@ contiguous-negative-selection-lang ../example/testset-xhosa-n500.txt 6 3 < reper
 
 Dividing these numbers by the total repertoire size obtained in step 4 and multiplying by 1 million yields Figure 2C.
 
-
