@@ -10,7 +10,35 @@ should together suffice to reproduce all figures in the manuscript. For convenie
 with all (simulation, analysis and plotting) code that can be used to generate the figures automatically.
 
 
-## How to run the code
+## About the model
+The used model is a string-based model of thymic selection in the immune system.
+It implements the techniques described in:
+
+Johannes Textor, Katharina Dannenberg, Maciej Liskiewicz:
+__A Generic Finite Automata Based Approach to Implementing Lymphocyte Repertoire Models.__
+In _Proceedings of the 2014 conference on genetic and evolutionary computation (GECCO'14)_, pp. 129-137. ACM, 2014. http://dx.doi.org/10.1145/2576768.2598331
+
+The code generates deterministic automata (DFAs) that recognize certain sets of strings of fixed length. The alphabet 
+is defined in "proteins.hpp" and it is normally taken to be the 20-letter amino acid alphabet (of course, this can be 
+adapted, and we also use "latinalphabet.hpp" in te current manuscript).
+
+For example, the file "contiguous-fa.cpp" implements the so-called r-contiguous matching rule. 
+
+## Dependencies and installation
+
+You will need a C++ compiler and the OpenFST library binaries installed (http://www.openfst.org). On Mac OS X, you can 
+install these with homebrew using
+
+```
+brew install openfst
+```
+
+OpenFST is also part of the libfst-dev package that you can install using the APT package
+manager on Linux systems:
+
+```
+sudo apt-get install libfst-dev
+```
 
 To use the model code, first go to the `model/` folder and compile the code by typing
 
@@ -19,6 +47,15 @@ make
 ```
 
 (If you do not have Make, you can also compile the code manually using the flags as shown in the `Makefile`).
+
+This should work, but if you run into problems because the compiler cannot find the
+OpenFST installation, consider setting the `-L` and `-I` flags in the `FSTFLAGS` variable
+in the Makefile. 
+
+
+
+## How to run the code
+
 
 Using this code, we can now run a negative selection simulation in several steps.
 
