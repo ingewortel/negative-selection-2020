@@ -1,0 +1,53 @@
+\documentclass[tikz]{standalone}
+\pagestyle{empty}
+
+\usepackage{tikz} %package for drawing figures
+\usetikzlibrary{positioning,calc,fit,decorations.pathreplacing,arrows,positioning,backgrounds}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{graphicx}
+\usepackage{pxfonts}
+
+\newcommand{\figf}{\sffamily\bfseries\small} %Defines the font used for the labelling of figure panels.
+
+
+\begin{document}
+\scriptsize
+%---------------------------------FIGURE 1: MODEL DESCRIPTION---------------------------------
+
+\begin{tikzpicture}[anchor=north west]
+
+%%--------panel A/B: TCR description and k-contiguous matching
+\begin{scope}[]
+  \begin{scope}[yshift=-1.9cm]
+  	\node[anchor=north west,scale=0.25] (lang) at (1.85,-0.7) {\includegraphics{../plots/tcr.pdf}};
+  	\node[anchor=west] at (-0.2,-0.9) {motif};
+  	\node[anchor=west] at (-0.2,-1.3) {string};
+	\node[anchor=west] at (-0.2,-0.5) {Language AIS:};
+  	%\node[anchor=north] at (2.5,0) {motif};
+ 	%\draw (1.45,-0.55) -- (1.45,-0.4) -- (3.6,-0.4) -- (3.6,-0.55);
+  \end{scope}
+	%\node[above = 0.1mm of lang.south] (start) {};
+	%\draw[-triangle 60] (start) -- +(0,-0.8);
+
+  %\begin{scope}[xshift=4cm,yshift=-0.3cm]
+  \begin{scope}[yshift=-0.3cm]
+  	\node[anchor=north west,scale=0.25] (peps) at (1.4,-0.7) {\includegraphics{../plots/tcr-peps.pdf}};
+  	\node[anchor=west] at (-0.2,-0.9) {TCR};
+  	\node[anchor=west] at (-0.2,-1.3) {peptide};
+	
+	  \node[above=0.1mm of peps.south] (start) {};
+	  \draw[-triangle 60] (start) -- +(0,-0.5);
+	\node[anchor=west] at (-0.2,-0.5) {Peptide AIS:};
+  	%\node[anchor=north] at (2.5,0) {motif};
+ 	%\node[anchor=north, align=center] at (2.8,-1.7) {TCR binding\\residues};
+	%\draw (2.0, -1.55) -- (2.0,-1.68) -- (3.5,-1.68) -- (3.5, -1.55);
+  \end{scope}
+
+
+
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}
