@@ -83,7 +83,7 @@ p <- ggplot( d, aes( 	x = ntrain,
    		legend.justification=c(0,1),
     		legend.background=element_rect(fill=NA)
   	)
-print(p)
+# print(p)
 # Save plot
 ggsave(outfile,width=pw,height=4.2,unit="cm")
 

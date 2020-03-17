@@ -85,7 +85,7 @@ p <- ggplot( d, aes( 	x = ntrain,
   	)
 gg_table <- ggplot_gtable(ggplot_build(p))
 gg_table$layout$clip[gg_table$layout$name=="panel"] <- "off"
-grid.draw(gg_table)
+#grid.draw(gg_table)
 
 # Save plot
 ggsave(outfile,gg_table,width=pw,height=4,unit="cm")

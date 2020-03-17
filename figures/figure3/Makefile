@@ -14,11 +14,11 @@ all : figure3.pdf
 # ==================== FIGURE 3 ================================================
 # This code combines all panels into a single pdf for figure 3. 
 figure3.pdf : latex/figure3.pdf
-	cp $< $@
+	@cp $< $@
 
 latex/figure3.pdf : latex/figure3.tex ../shared-scripts/latex/figure-preamble.tex \
 	cartoon-panels simulation-panels
-	cd latex && pdflatex figure3.tex
+	@cd latex && pdflatex figure3.tex > texlog.log
 
 
 # ==================== CARTOONS ================================================
@@ -42,7 +42,7 @@ plots/F3panelC.pdf : ../shared-scripts/plotting/plot-pf.R data/precursors-sim1.t
 	@echo "Plotting Fig3 panel C" && Rscript $< data/precursors-sim1.txt 3 "xh" 1 $@ 0
 
 plots/F3panelD.pdf : ../shared-scripts/plotting/plot-top.R data/precursors-calc.txt ../shared-scripts/plotting/mytheme.R | plots
-	@echo "Plotting Fig3 panel D" && Rscript $< data/precursors-calc.txt 3 "xh" "sd" "lang" $@
+	@echo "Plotting Fig3 panel D" && Rscript $< data/precursors-calc.txt 3 "xh" "sd" "lang" $@ && rm -f Rplots.pdf
 
 # ==================== SIMULATION DATA 3: PLOTTED DATA ============================
 # Processed data used for plotting, using the data from SIMULATION DATA 2.
@@ -55,11 +55,11 @@ plots/F3panelD.pdf : ../shared-scripts/plotting/plot-top.R data/precursors-calc.
 # 			yielding a mean, SD, and SEM for each simulation.
 
 # Analyzed version of the raw data for panel C
-data/precursors-sim1.txt : data/analysis.mk ../shared-scripts/analysis/analyze-precursors3.R 
+data/precursors-sim1.txt : data/analysis.mk ../shared-scripts/analysis/analyze-precursors3.R data/frequencies
 	@echo "Analyzing repertoires for Figure 3C" && $(MAKE) -f $< $@
 
 # Analyzed version of the raw data for panel D
-data/precursors-calc.txt : data/analysis.mk ../shared-scripts/analysis/analyze-precursors3.R 
+data/precursors-calc.txt : data/analysis.mk ../shared-scripts/analysis/analyze-precursors3.R data/frequencies
 	@echo "Analyzing repertoires for Figure 3D" && $(MAKE) -f $< $@
 
 data/analysis.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh data/output
@@ -157,7 +157,7 @@ data/repertoires/panelD-repertoires.mk : ../shared-scripts/repertoires/loop-repe
 
 # Auxiliary targets
 latex-clean : | latex
-	cd latex && rm *.aux *.log *.pdf	
+	cd latex && rm -f *.aux *.log *.pdf	
 	
 data : 
 	mkdir -p data 
@@ -177,5 +177,5 @@ data/output :
 plots :
 	mkdir -p plots
 
-clean:
+clean: latex-clean
 	rm -rf data && rm -rf plots
