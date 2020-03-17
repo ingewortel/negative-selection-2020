@@ -1,0 +1,55 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------FIGURE 1: LANGUAGES---------------------------------
+
+\begin{tikzpicture}[anchor=north west]
+%\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+%\filldraw[white] (0,0) rectangle (12,-0.1);
+\clip (0,0) rectangle (12,-7.5);
+
+
+% PANEL B
+\begin{scope}[yshift=0cm]
+  \node[scale=1, anchor = north west] at (0,0) {\includegraphics{../cartoons/negative-selection-2.pdf}};
+  \node at (0,0) {\figf  A};
+\end{scope}
+
+% PANEL C
+\begin{scope}[yshift=-3.9cm]
+  \node[anchor = north west, scale=0.75] at (1.95,-0.5) {\includegraphics{../plots/F3panelB2.pdf}};
+  \node[anchor = north west, scale=0.75] at (0,-0.5) {\includegraphics{../plots/F3panelB1.pdf}};
+  \node at (1.1,-0.35) {Before selection:};
+  \node at (3.05,-0.35) {After selection:};
+  \node at (0,-0.1) {\figf  B};
+\end{scope}
+
+% PANEL D
+\begin{scope}[xshift=4.9cm, yshift=-3.9cm]
+  \node[anchor = north west, scale=0.75] at (0,-0.35) {\includegraphics{../plots/F3panelC.pdf}};
+  \node[hivc, anchor = east, align=left] at (3.25,-0.55) {Xhosa};
+  \node[selfc, anchor = east, align=left] at (3.25,-2.0) {English};
+  \node at (0,-0.1) {\figf  C};
+\end{scope}
+
+% PANEL E
+\begin{scope}[xshift=8.3cm, yshift=-3.9cm]
+  \node[anchor = north west, scale=0.75] at (0,-0.5) {\includegraphics{../plots/F3panelD.pdf}};
+  \node at (0,-0.1) {\figf  D};
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}

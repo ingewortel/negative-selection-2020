@@ -1,0 +1,9 @@
+hiv	hiv	UP000002241
+hepatitisB	hepb	UP000007930
+hepatitisC	hepc	UP000000518
+hcmv	hcmv	UP000008991
+zika	zika	UP000054557
+ebola	ebola	UP000007209
+malaria	mal	UP000078550
+vaccinia	vac	UP000008269
+listeria	lis	UP000000817
