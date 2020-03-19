@@ -314,7 +314,7 @@ clean-panelE :
 # Step 0: Make a single file with 6mers from all languages to compute concordance on. 
 # This is just the input strings used for all the figures, so this does not involve any 
 # simulation of negative selection or any sampling of "training strings".
-data/concordances/all-6mers.txt : $(trainset) $(foreach l,$(languages),../input-data/languages/$(l)-unseen.txt)
+data/concordances/all-6mers.txt : $(trainset) $(foreach l,$(languages),../input-data/languages/$(l)-unseen.txt) | data/concordances
 	@cat $< | awk '{print "self", $$1}' > $@ ;\
 	for l in $(languages); do \
 		cat ../input-data/languages/$$l-unseen.txt | awk -v l=$$l '{print l, $$1}' >> $@ ;\
