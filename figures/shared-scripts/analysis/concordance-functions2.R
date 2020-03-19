@@ -174,7 +174,7 @@ neighbor.concordance <- function( neighbor.table, selfclass, foreignclass ){
 concordances <- function(string.data, rvalue, selfclass ){
   
   	nt <- neighbor.table( string.data, rvalue )
-	save( nt, file = paste0( "data/neighbortable-r",rvalue,".Rdata" ) )
+	save( nt, file = paste0( "data/concordances/neighbortable-r",rvalue,".Rdata" ) )
 	classes <- nt$class
 	nonself.classes <- unique(classes)[unique(classes)!=selfclass ]
 	out.data <- data.frame()

@@ -71,16 +71,22 @@ d2 <- d %>%
 	summarise( mperc = mean( perc ) ) %>%
 	as.data.frame()
 
-# Mean over sims & iqr
+
+sem <- function(x){
+	return( sd(x)/sqrt(length(x)) )
+}
+
+
+# Mean over sims & sem
 d3 <- d2 %>%
 	group_by( cat, ntrain ) %>%
-	summarise( m = mean( mperc ), lo = quantile( mperc, 0.25 ) , hi = quantile( mperc, 0.75 ) ) %>%
+	summarise( m = mean( mperc ), sem = sem(mperc), lo = m - sem( mperc ), hi = m + sem( mperc ) ) %>% #lo = quantile( mperc, 0.25 ) , hi = quantile( mperc, 0.75 ) ) %>%
 	as.data.frame()
 
 
 p <- ggplot( d3, aes( x = ntrain, y = m, colour = cat, fill=cat )) + 
 	geom_line() + 
-	#geom_ribbon( aes( ymin=lo, ymax=hi ), alpha=0.2, colour=NA ) +
+	geom_ribbon( aes( ymin=lo, ymax=hi ), alpha=0.2, colour=NA ) +
 	labs( x = xlab, y = "TCR survival (%)" ) +
 	scale_y_continuous( limits=c(-3,100), expand=c(0,0)) +
 	scale_x_continuous( expand=c(0.03,0) ) +
