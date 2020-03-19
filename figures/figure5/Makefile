@@ -25,7 +25,7 @@ latex/figure5.pdf : latex/figure5.tex ../shared-scripts/latex/figure-preamble.te
 
 
 # These are the simulation plots to generate
-panels=panelB-lang panelB-peps-r4 F5panelD-r3 F5panelD-r4 F5panelE-r3 F5panelE-r4
+panels=panelB-lang panelB-peps-r4 panelD-r3 panelD-r4 panelE-r3 panelE-r4
 simulation-panels :$(foreach p, $(panels), plots/F5$(p).pdf)
 
 
