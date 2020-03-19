@@ -1,0 +1,88 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------FIGURE 1: LANGUAGES---------------------------------
+
+\begin{tikzpicture}[anchor=north west]
+\clip (0,0) rectangle (12,-12);
+
+\begin{scope}[]
+	\node[anchor = north west, scale=0.75] at (0,-0.3) { \includegraphics{../plots/F4panelA.pdf}}; % \includegraphics{../../figure-lang-mechanism/plots/tsurv-r3-compare.pdf}};
+  \node[hivc, anchor = east, align=left, rotate=-7] at (4,-0.90) {Xhosa motifs};
+  \node[selfc, anchor = east, align=left, rotate=-11] at (4,-1.8) {English motifs};
+  \filldraw[white] (0.2,-0.3) rectangle +(0.3,-2.7);
+  \node[anchor=center,rotate=90] at (0.4,-1.45) {motif survival (\%)};
+  \node at (0,0) {\figf  A};
+\end{scope}
+
+\begin{scope}[xshift=4.3cm]
+  \node[anchor = north west, scale=0.09] at (0.5,-0.7) {\includegraphics{../plots/F4panelB-xh.pdf}};
+  \node[anchor = north west, align=left] at (0.5,-0.1) {Xhosa-English:\\(concordance: 0.81)};
+  \node[anchor = north west, scale=0.09] at (3.9,-0.7) {\includegraphics{../plots/F4panelB-self.pdf}};
+  \node[anchor= north west, align=left ] at (3.8,-0.1) {English-English:\\(concordance: 0.5)};
+
+\begin{scope}[xshift=0.8cm, yshift=-3.9cm]
+	\filldraw[lightgray] (0,-0) circle (0.4mm);
+	\node[anchor=north west, align=left] at (0.2, 0.2) {English string};
+	\filldraw[hivc] (-0.04,-0.3) rectangle +(0.08,-0.08);
+	\node[anchor=north west, align=left] at (0.2, -0.16) {Xhosa string};
+
+	\draw[hivc, line width=1pt] (2.5,0.06) -- +(0.4,0);
+	\draw[selfc, line width=1pt] (2.5,-0.06) -- +(0.4,0);
+	\node[anchor=north west, align=left] at (3.1,0.2) {Concordant neighbors};
+
+	\draw[red, line width=1pt] (2.5, -0.35) -- +(0.4,0);
+	\node[anchor=north west, align=left] at (3.1,-0.16) {Discordant neighbors};
+
+\end{scope}
+
+
+  \node at (0,0) {\figf  B};
+\end{scope}
+
+\begin{scope}[yshift=-4.4cm]
+  \node[scale=0.28] at (0.9,-0.6) {\includegraphics{../plots/F4panelC-r6.pdf}};
+  \node[scale=0.28] at (4.0,-0.8) {\includegraphics{../plots/F4panelC-r3.pdf}};
+  \node[scale=0.28] at (8,-0.6) {\includegraphics{../plots/F4panelC-r1.pdf}};
+  \node[align=left] at (0.7,-0.25) {Complete specificity (t = 6) };
+  \node[align=left] at (3.9,-0.25) {Moderate specificity (t = 3)};
+  \node[align=left] at (7.6,-0.25) {Low specificity (t = 1)};
+  \draw (0.8,-0.6) rectangle +(2.8,-2);
+  \draw (4.0,-0.6) rectangle +(3.3,-2);
+  \draw (7.7,-0.6) rectangle +(2.9,-2);
+
+  \node at (0,0) {\figf  C};
+\end{scope}
+
+\begin{scope}[yshift=-7.1cm]
+  \node[scale=0.75] at (0,-0.3) {\includegraphics{../plots/F4panelD-xh.pdf}};
+  \node[scale=0.75] at (0,-2.3) {\includegraphics{../plots/F4panelD-me.pdf}};
+  \node at (1.5,-0.5) {Xhosa};
+  \node at (1.1,-2.5) {Medieval English};
+  \node at (0,0) {\figf D};
+\end{scope}
+
+\begin{scope}[xshift=3cm, yshift=-7.1cm]
+	\node[scale=0.75] at (0,-0.3) {\includegraphics{../plots/F4panelE.pdf}};
+	\node at (0,0) {\figf E};
+\end{scope}
+
+
+\begin{scope}[xshift=7.45cm, yshift=-7.1cm]
+  \node[scale=0.75] at (0,-0.3) {\includegraphics{../plots/F4panelF.pdf}};
+  \node at (0,0) {\figf F};
+\end{scope}
+\end{tikzpicture}
+
+\end{document}

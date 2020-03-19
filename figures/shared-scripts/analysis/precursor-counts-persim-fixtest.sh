@@ -37,13 +37,11 @@
 REPERTOIREDIR=$1
 ntrain=$2
 R=$3
-EPFILE=$4
-EPITOPEID=$5
-MODELDIR=$6
-NTEST=$7
-sim=$8
-TYPE=$9
-OUTFILE=${10}
+TESTFILE=$4
+MODELDIR=$5
+sim=$6
+TYPE=$7
+OUTFILE=$8
 
 # Defaults:
 MOTIFLENGTH=6
@@ -52,7 +50,7 @@ L=""
 UNSEEN=0
 
 # Options and flags:
-OPTIND=11
+OPTIND=9
 while getopts ":n:m:l:u" opt; do
 	case $opt in
 		n)
@@ -74,13 +72,13 @@ while getopts ":n:m:l:u" opt; do
 done
 
 
-FILEID=$RANDOM-pf-$EPITOPEID-$MATCHTYPE-$sim-$ntrain-$R
+FILEID=$RANDOM-pf-$MATCHTYPE-$sim-$ntrain-$R
 
-mkdir -p data/pfout/$MATCHTYPE/$TYPE
-tmtesteps=data/tmp/testeps-$FILEID.txt
-tmrepertoire=data/tmp/rep-$FILEID.fst
+mkdir -p data/fixtest-pfout/$MATCHTYPE/$TYPE
+tmtesteps=data/tmp-fixtest/testeps-$FILEID.txt
+tmrepertoire=data/tmp-fixtest/rep-$FILEID.fst
 
-mkdir -p data/tmp
+mkdir -p data/tmp-fixtest
 echo -n > $tmtesteps
 
 
@@ -103,21 +101,10 @@ cp $REP $tmrepertoire.gz
 gunzip -k $tmrepertoire.gz
 trap "rm $tmrepertoire; rm $tmrepertoire.gz; rm $tmtesteps" EXIT
 
-# Create a test set
-# If option -u, UNSEEN=1 and test epitopes should be unseen:
-if [ $UNSEEN -eq 1 ] ; then
-	comm -13 <( sort $TRAINFILE ) <( sort $EPFILE ) | perl -MList::Util -e 'print List::Util::shuffle <>' | head -$NTEST > $tmtesteps
+# Use supplied test set
+cat $TESTFILE | awk '{print $2}' > $tmtesteps
 
-# If not, UNSEEN=0 and test epitopes are selected randomly:		
-else
-	cat $EPFILE | perl -MList::Util -e 'print List::Util::shuffle <>' | head -$NTEST > $tmtesteps
-fi
-
-# Compute precursor frequencies and store in OUTFILE. Add a column with simulation number
-# at the end.
-bash ../shared-scripts/analysis/precursor-frequencies-c.sh $tmtesteps $tmrepertoire $MODELDIR -n $MOTIFLENGTH -r $R -m $MATCHTYPE -l $L | paste $tmtesteps - | awk -v ID="$EPITOPEID" -v sim="$sim" '{print ID, $0, sim}' > $OUTFILE
-
-
-
+# Compute precursor frequencies and store in OUTFILE
+bash ../shared-scripts/analysis/precursor-frequencies-c.sh $tmtesteps $tmrepertoire $MODELDIR -n $MOTIFLENGTH -r $R -m $MATCHTYPE -l $L | paste $TESTFILE - | awk -v sim="$sim" '{print $0, sim}' > $OUTFILE
 
 
