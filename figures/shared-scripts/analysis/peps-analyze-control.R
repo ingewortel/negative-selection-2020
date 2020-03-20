@@ -11,6 +11,10 @@ outfilename <- argv[4]
 # LOOP OVER SIMULATIONS : 
 sim.data <- data.frame()
 for( s in 1:nsim ){
+
+  if( s %% 1 == 0 ){
+  	print( paste0( "... sim ", s, " of ", nsim ) )
+  }
   filename <- paste0(file,s,".txt")
   
   d <- read.table( filename )
