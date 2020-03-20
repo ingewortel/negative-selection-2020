@@ -141,8 +141,110 @@ plots/F6panelB.pdf : ../shared-scripts/plotting/plot-tsurv-selectiontype.R \
 	@echo "Plotting Figure 6B" && Rscript $< data/tsurv-RvsG-r4.txt $(NSIM) $(NTEST) "peps" $@
 
 
+# ==================== PANEL C ================================================
+
+# Step 1: Build graph to analyze exchangeability
+data/exch-all.txt : ../shared-scripts/analysis/graph-exch.py $(trainset) ../input-data/peptides/hiv-6mers.txt | data
+	@echo "Building graph to get exchangeability" && python3 $^ 4 | sort > $@
+
+# Step 2: Plot figure.
+plots/F6panelC.pdf : ../shared-scripts/plotting/plot-exchangeability-compare.R \
+	data/exch-all.txt ../shared-scripts/plotting/mytheme.R | plots
+	@echo "Plotting Figure 6C" &&  Rscript $< data/exch-all.txt $(trainset) data/peptide-sets/greedy-r4.txt $@
+
+# ==================== PANEL D ================================================
+
+# Self-hiv discrimination after negative selection on different sizes of trainsets
+# and with t = 3 or t = 4 - random or optimal set. The data for the random sets was
+# already generated in the previous figure.
+
+# *** STEP 1: Make the repertoires just like in figure 5, but now with optimal trainsets.
+# We first make a Makefile in data/mkfiles/panelD-repertoires.mk
+# for generating the repertoires. This ensures that we can then
+# make all required repertoires in parallel. 
+data/mkfiles/panelD-repertoires.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
+	progress/greedy| \
+	data/repertoires/peptides/contiguous data/repertoires/peptides/trainsets data/mkfiles
+	@bash $< data/peptide-sets/greedy "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
+		data/repertoires/peptides/contiguous -T "O" -S "1 $(NSIM)" -n 6 -m "contiguous" > $@
+
+# Ensure that the repertoires for panelB are made first, as these also are used for panelC.
+progress/panelD-repertoires : data/mkfiles/panelD-repertoires.mk | progress
+	@echo "...Generating repertoires for Figure6D..." && $(MAKE) -f $< && touch $@
+
+# *** STEP 2: After generating the repertoires, we measure TCRs/test peptide.
+# We first generate makefiles to count TCRs per test peptide for all simulations,
+# for all test peptides of the given pathogen. It uses the corresponding negatively 
+# selected repertoires from the previous step and compares them to a sample of unseen
+# test peptides of size NTEST (which is set on top of this page). 
+# For this figure, we use r=3/r=4 but take all values of ntrain.
+data/mkfiles/panelD-frequencies-self.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
+	progress/panelD-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "O" \
+		-n 6 -m "contiguous" -u > $@
+
+data/mkfiles/panelD-frequencies-hiv.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/hiv-6mers.txt progress/panelD-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "O" \
+		-n 6 -m "contiguous" -u > $@
+
+# Use these makefiles to generate the actual files with motifs/test string. The progress/X
+# files just indicate that the step has been completed, while the actual data
+# will be stored in data/pfout/contiguous/R/. See also previous panel.
+progress/panelD-frequencies-O-% : data/mkfiles/panelD-frequencies-%.mk progress/panelD-repertoires \
+	../shared-scripts/analysis/precursor-counts-persim.sh \
+	../shared-scripts/analysis/precursor-frequencies-c.sh \
+	../shared-scripts/negselmodel/src/contiguous-negative-selection \
+	../shared-scripts/negselmodel/src/countpaths
+	@echo "...Analyzing precursor frequencies for Figure 6D $* ..." && $(MAKE) -f $< && touch $@
+
+# The frequencies for the random trainsets were computed in figure 5, copy them here.
+progress/panelD-frequencies-R : | progress data/pfout/contiguous/R
+	@echo "...Getting precursor frequencies from Figure 5 for random trainsets" &&\
+	cd ../figure5 && $(MAKE) progress/panelD-frequencies && \
+	cp data/pfout/contiguous/R/* ../figure6/data/pfout/contiguous/R/ &&\
+	touch $@
+
+progress/panelD-frequencies : progress/panelD-frequencies-O-hiv progress/panelD-frequencies-O-self \
+	progress/panelD-frequencies-R
+	@touch $@
+	
+# *** STEP 3: Further analyze the data; Precursor frequencies computed for training sets 
+# of different sizes (previous step) are here processed further to give median + IQR over 
+# the recognition of different test strings (but still in a single simulation for each ntrain). 
+# First again generate a makefile:
+data/mkfiles/panelD-analysis-%.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
+	progress/panelD-frequencies | data/mkfiles
+	@bash $< data/pfout/contiguous/$* "$(pep_selfsizes)" "$(rvec)" "hiv" "$(NSIM)" \
+		"data/panelD-precursors-$*" > $@
+
+# This file is produced by the makefile, by analyzing all the separate trainsets and merging
+# the results:
+data/panelD-precursors-%-calc.txt : data/mkfiles/panelD-analysis-%.mk \
+	../shared-scripts/analysis/analyze-precursors3.R progress/panelD-frequencies
+	@echo "...Analyzing repertoires for Figure 5D" && $(MAKE) -f $< $@
+
+# Combine the results with random (R) and optimal (O) sets into a single file:
+data/panelD-precursors-greedy-calc.txt : data/panelD-precursors-O-calc.txt data/panelD-precursors-R-calc.txt
+	cat $< | head -1 > $@ &&\
+	cat $^ | grep -v type >> $@
 
 
+# *** STEP 4: Make the plot.
+# For this figure only t = 4.
+plots/F6panelD.pdf : ../shared-scripts/plotting/plot-top.R \
+	data/panelD-precursors-greedy-calc.txt ../shared-scripts/plotting/mytheme.R | plots
+	Rscript $< data/panelD-precursors-greedy-calc.txt 4 "hiv" "none" "peps" $@
+
+
+# ==================== PANEL E ================================================
+
+# We only need to make the plot, since we use the data generated for panel C.
+plots/F6panelE.pdf : ../shared-scripts/plotting/plot-exch-vs-foreign.R \
+	data/exch-all.txt ../shared-scripts/plotting/mytheme.R | plots
+	Rscript $< data/exch-all.txt plots/F6panelE
 
 
 # ==================== FOLDER STRUCTURE ================================================
@@ -162,6 +264,9 @@ data/peptides-fixtest/trainsets :
 	@mkdir -p $@
 
 data/fixtest-pfout/contiguous/R :
+	@mkdir -p $@
+
+data/pfout/contiguous/R:
 	@mkdir -p $@
 
 data/fixtest-repertoires : 
