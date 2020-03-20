@@ -16,7 +16,7 @@ for( s in 1:nsim ){
   d <- read.table( filename )
   
   # compute concordance:
-  conc <- concordances(d, rvalue, "self")$concordance
+  conc <- concordances(d, rvalue, "self", verbose=TRUE)$concordance
   
   # Add to dataframe
   sim.data <- rbind( sim.data, data.frame( concordance=conc))
