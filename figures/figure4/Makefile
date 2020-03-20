@@ -4,13 +4,13 @@
 
 MODELDIR=../shared-scripts/negselmodel/src
 lang_selfsizes=0 1 5 10 50 75 100 150 200 250 300 400 500 600 700 800
-NSIM=30
+NSIM=5
 NTEST=50
 trainset=../input-data/languages/en_t.txt
 languages=xh en en2 me la pd ta hi
 rvec=1 2 3 4 5 6
 
-nsim_control=100 #for panelF, computing the english-vs-english control
+nsim_control=10 #for panelF, computing the english-vs-english control
 
 all : figure4.pdf
 
@@ -380,7 +380,7 @@ data/lang-concordance/out-sim%.txt : ../shared-scripts/analysis/lang-concordance
 	bash $< ../input-data/languages/samples/english-train.txt $* $(MODELDIR)
 
 progress/panelF-message : | progress
-	@echo "...Running control simulations Figure 4F" && touch $@
+	@echo "...Running $(nsim_control) control simulations Figure 4F" && touch $@
 
 progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | data/concordances progress
 	touch $@
