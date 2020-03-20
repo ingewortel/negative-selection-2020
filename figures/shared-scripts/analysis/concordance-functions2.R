@@ -171,7 +171,7 @@ neighbor.concordance <- function( neighbor.table, selfclass, foreignclass ){
 }
 
 
-concordances <- function(string.data, rvalue, selfclass ){
+concordances <- function(string.data, rvalue, selfclass, verbose = FALSE ){
   
   	nt <- neighbor.table( string.data, rvalue )
 	save( nt, file = paste0( "data/concordances/neighbortable-r",rvalue,".Rdata" ) )
@@ -180,6 +180,9 @@ concordances <- function(string.data, rvalue, selfclass ){
 	out.data <- data.frame()
 
 	for( c in nonself.classes ){
+		if( verbose ){
+			print( paste0( "... concordances ", c ) )
+		}
 		# compute neighbor concordance per string (unnormalized)
 		concdata <- neighbor.concordance( nt, selfclass, c )
 		c.classes <- classes[ classes == selfclass | classes == c ]

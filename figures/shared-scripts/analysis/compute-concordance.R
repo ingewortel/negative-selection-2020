@@ -47,14 +47,16 @@ for( s in 1:nsim){
 
   if(nsim==1){
     testepfile <- testepdir
+    verbose <- TRUE
   } else {
     testepfile <- paste0( testepdir, "/all-sim",s,".txt")
+    verbose <- FALSE
   }
   
     # Read the file with strings
     d <- read.table( testepfile )
 
-    sim.data <- concordances(d, rvalue, "self")
+    sim.data <- concordances(d, rvalue, "self", verbose)
     sim.data$sim <- s
     
     #if( anyNA( sim.data$concordance )){
