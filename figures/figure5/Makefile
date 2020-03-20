@@ -54,7 +54,7 @@ data/concordances/lang-control-data.txt : | data/concordances
 # Step 2: plot language concordances.
 plots/F5panelB-lang.pdf : ../shared-scripts/plotting/plot-concordance.R \
 	data/concordances/lang-r3.txt data/concordances/lang-control-data.txt \
-	@echo "...Getting language control concordances" && ../shared-scripts/plotting/mytheme.R | plots
+	../shared-scripts/plotting/mytheme.R | plots
 	@echo "Plotting Figure 5B for languages" Rscript $< data/concordances/lang-r3.txt data/concordances/lang-control-data.txt "lang" $@ && rm -f Rplots.pdf
 
 
