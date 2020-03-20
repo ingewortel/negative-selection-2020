@@ -173,7 +173,7 @@ neighbor.concordance <- function( neighbor.table, selfclass, foreignclass ){
 
 concordances <- function(string.data, rvalue, selfclass, verbose = FALSE ){
   
-  	print(verbose)
+  	
   	nt <- neighbor.table( string.data, rvalue )
 	save( nt, file = paste0( "data/concordances/neighbortable-r",rvalue,".Rdata" ) )
 	if( verbose ) print('...neighbor table generated')

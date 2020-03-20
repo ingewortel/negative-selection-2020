@@ -3,6 +3,8 @@ source("../shared-scripts/analysis/concordance-functions2.R")
 
 argv <- commandArgs( trailingOnly = TRUE )
 
+console.log(argv)
+
 testepdir <- argv[1]
 rvalue <- as.numeric( argv[2] )
 nsim <- as.numeric( argv[3] )
@@ -50,7 +52,7 @@ for( s in 1:nsim){
     verbose <- TRUE
   } else {
     testepfile <- paste0( testepdir, "/all-sim",s,".txt")
-    verbose <- FALSE
+    verbose <- TRUE
   }
   
     # Read the file with strings
