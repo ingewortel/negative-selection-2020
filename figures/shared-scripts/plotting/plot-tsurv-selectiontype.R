@@ -1,6 +1,6 @@
 suppressMessages( library( dplyr ) )
 library(ggplot2)
-source("../scripts/plotting/mytheme.R")
+source("../shared-scripts/plotting/mytheme.R")
 
 argv <- commandArgs( trailingOnly = TRUE )
 datafile <- argv[1]

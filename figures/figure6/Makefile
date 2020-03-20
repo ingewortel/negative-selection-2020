@@ -58,14 +58,14 @@ progress/panelB-testsets : | data/testsets progress
 # Step 3: Make trainsets of peptides not in the test set
 progress/panelB-train-peps-O-r% : ../shared-scripts/trainset-sampling/greedy-train.r progress/greedy \
 	progress/panelB-testsets ../shared-scripts/repertoires/train-epitopes.sh | \
-	data/peptides-fixtest/trainsets
+	data/fixtest-repertoires/peptides/trainsets
 	@echo "...Generating training sets" && \
 	for sim in $$(seq 1 $(NSIM) ) ; do \
-		Rscript ../shared-scripts/trainset-sampling/greedy-train.r data/peptide-sets/greedy-r$*.txt data/testsets/all-sim$$sim.txt data/peptides-fixtest/trainsets/gtmp-sim$$sim-r$*.txt &&\
+		Rscript ../shared-scripts/trainset-sampling/greedy-train.r data/peptide-sets/greedy-r$*.txt data/testsets/all-sim$$sim.txt data/fixtest-repertoires/peptides/trainsets/gtmp-sim$$sim-r$*.txt &&\
 		for n in $(pep_selfsizes) ; do \
 			bash ../shared-scripts/repertoires/train-epitopes.sh \
-				data/peptides-fixtest/trainsets/gtmp-sim$$sim $$n -T O -r \
-				$* > data/peptides-fixtest/trainsets/traineps-r$*-O-n$$n-sim$$sim.txt ;\
+				data/fixtest-repertoires/peptides/trainsets/gtmp-sim$$sim $$n -T O -r \
+				$* > data/fixtest-repertoires/peptides/trainsets/traineps-r$*-O-n$$n-sim$$sim.txt ;\
 		done ;\
 	done && touch $@
 
@@ -77,7 +77,7 @@ progress/panelB-train-peps-O : $(foreach r,$(rvec), progress/panelB-train-peps-O
 data/mkfiles/panelB-repertoires.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
 	progress/panelB-train-peps-O | data/fixtest-repertoires/peptides/contiguous \
 	data/fixtest-repertoires/peptides/trainsets data/mkfiles
-	@bash $< ../data/peptide-sets/greedy "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
+	@bash $< data/peptide-sets/greedy "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		data/fixtest-repertoires/peptides/contiguous -T "O" -S "1 $(NSIM)" -n 6 -m "contiguous" > $@
 
 progress/panelB-repertoires :  data/mkfiles/panelB-repertoires.mk progress/panelB-train-peps-O
