@@ -61,7 +61,7 @@ d$perc <- 100*d$prec/d$p0
 
 # Mean percentage survival for epitopes within one sim
 d2 <- d %>%
-	group_by( cat, type, ntrain, sim ) %>%
+	group_by( cat, type, ntrain, sim, type ) %>%
 	summarise( mperc = mean( perc ) ) %>%
 	as.data.frame()
 
@@ -73,7 +73,7 @@ sem <- function(x){
 
 # Mean over sims & sem
 d3 <- d2 %>%
-	group_by( cat, ntrain ) %>%
+	group_by( cat, ntrain, type ) %>%
 	summarise( m = 100-mean( mperc ), sem = sem(mperc), lo = m - sem( mperc ), hi = m + sem( mperc ) ) %>% #lo = quantile( mperc, 0.25 ) , hi = quantile( mperc, 0.75 ) ) %>%
 	as.data.frame()
 #d3$m <- 100 - d3$m
