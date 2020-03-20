@@ -375,10 +375,12 @@ data/lang-concordance/out-sim%.txt : ../shared-scripts/analysis/lang-concordance
 	../input-data/languages/samples/english-train.txt ../shared-scripts/get6mers/chunkify.py \
 	../shared-scripts/repertoires/repertoires.sh ../shared-scripts/analysis/precursor-frequencies-c.sh \
 	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection-lang $(MODELDIR)/contiguous-fa-lang \
-	$(MODELDIR)/makerep-contiguous-fa-lang
-	@echo "...Running control simulations Figure 4F" &&\
-	rm -f data/lang-concordance/repertoires/rep-sim$*.fst ;\
+	$(MODELDIR)/makerep-contiguous-fa-lang progress/panelF-message
+	@rm -f data/lang-concordance/repertoires/rep-sim$*.fst ;\
 	bash $< ../input-data/languages/samples/english-train.txt $* $(MODELDIR)
+
+progress/panelF-message : | progress
+	@echo "...Running control simulations Figure 4F" && touch $@
 
 progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | data/concordances progress
 	touch $@
