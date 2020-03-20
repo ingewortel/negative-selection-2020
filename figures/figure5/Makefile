@@ -150,7 +150,7 @@ data/mkfiles/panelD-frequencies-self.mk : ../shared-scripts/analysis/loop-precur
 
 data/mkfiles/panelD-frequencies-hiv.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/hiv-6mers.txt progress/panelD-repertoires | data/mkfiles
-	bash $< data/repertoires/languages "$(pep_selfsizes)" "$(rvec)" \
+	bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "R" \
 		-n 6 -m "contiguous" -u > $@
 
