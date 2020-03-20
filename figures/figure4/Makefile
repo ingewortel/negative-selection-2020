@@ -322,14 +322,14 @@ data/concordances/all-6mers.txt : $(trainset) $(foreach l,$(languages),../input-
 
 # Step 1: Compute concordances for all these languages at t = 3
 data/concordances/r3.txt : ../shared-scripts/analysis/compute-concordance.R data/concordances/all-6mers.txt ../shared-scripts/analysis/concordance-functions2.R
-	@echo "....Computing all language concordances at t = 3" && Rscript $< data/concordances/all-6mers.txt 3 1 $@
+	@echo "...Computing all language concordances at t = 3 for Figure 4F" && Rscript $< data/concordances/all-6mers.txt 3 1 $@
 
 # Step 2: Now we also need the outcome from negative selection simulations with an
 # english vs xhosa testset, using ntrain=800 strings. 
 # First, we need the repertoires, but since making a repertoire only involves selecting
 # against self-strings, we can use the same repertoires as for panel E. 
 progress/panelF-repertoires : progress/panelE-repertoires
-	@touch $@
+	@echo "...Using repertoires from Figure 4E also for Figure 4F" && touch $@
 
 # Step 3: Compute the precursor frequencies for self and other languages on these repertoires.
 # We don't need to do self and xh, since these have been analyzed already for panelE.
@@ -355,7 +355,7 @@ progress/panelF-frequencies-% : data/mkfiles/frequencies-panelF-%.mk progress/pa
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/negselmodel/src/contiguous-negative-selection-lang \
 	../shared-scripts/negselmodel/src/countpaths
-	@echo ".......Analyzing precursor frequencies for $* ..." && $(MAKE) -f $< && touch $@
+	@echo "...Analyzing precursor frequencies for $* in Figure 4F..." && $(MAKE) -f $< && touch $@
 
 other_languages=en en2 me la pd ta hi
 progress/panelF-frequencies : $(foreach l, $(other_languages), progress/panelF-frequencies-$(l)) progress/panelE-frequencies
@@ -363,7 +363,7 @@ progress/panelF-frequencies : $(foreach l, $(other_languages), progress/panelF-f
 
 # Step 4: Analyze the outputs to get discrimination scores.
 data/panelF-precursors-calc.txt : data/mkfiles/analysis-panelF.mk ../shared-scripts/analysis/analyze-precursors3.R progress/panelF-frequencies
-	@echo "Analyzing repertoires for Figure 4F" && $(MAKE) -f $< $@
+	@echo "...Analyzing repertoires for Figure 4F" && $(MAKE) -f $< $@
 
 data/mkfiles/analysis-panelF.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh progress/panelF-frequencies | data/mkfiles
 	@bash $< data/pfout/contiguous/R "800" "3" "$(languages)" "$(NSIM)" "data/panelF-precursors" -l "-lang" > $@
@@ -371,24 +371,27 @@ data/mkfiles/analysis-panelF.mk : ../shared-scripts/analysis/analyze-precursors-
 
 # Step 5: Repeat but with extra simulations for the "control" (english versus more english).
 # We do extra simulations to see that this point really ends up at 0.5.
-data/concordances/control-data.txt : ../shared-scripts/analysis/lang-analyze-control.R \
-	../shared-scripts/analysis/concordance-functions2.R progress/panelF-controlsims | data/concordances
-	Rscript $< "data/lang-concordance/out-sim" $(nsim_control) 3 $@
-
-progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | data/concordances progress
-	touch $@
-	
 data/lang-concordance/out-sim%.txt : ../shared-scripts/analysis/lang-concordance-control.sh \
 	../input-data/languages/samples/english-train.txt ../shared-scripts/get6mers/chunkify.py \
 	../shared-scripts/repertoires/repertoires.sh ../shared-scripts/analysis/precursor-frequencies-c.sh \
 	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection-lang $(MODELDIR)/contiguous-fa-lang \
 	$(MODELDIR)/makerep-contiguous-fa-lang
-	@rm -f data/lang-concordance/repertoires/rep-sim$*.fst ;\
+	@echo "...Running control simulations Figure 4F" &&\
+	rm -f data/lang-concordance/repertoires/rep-sim$*.fst ;\
 	bash $< ../input-data/languages/samples/english-train.txt $* $(MODELDIR)
 
+progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | data/concordances progress
+	touch $@
+
+data/concordances/control-data.txt : ../shared-scripts/analysis/lang-analyze-control.R \
+	../shared-scripts/analysis/concordance-functions2.R progress/panelF-controlsims | data/concordances
+	@echo "...Analyzing control concordances Figure 4F" && \
+	Rscript $< "data/lang-concordance/out-sim" $(nsim_control) 3 $@
+
+	
 # Step 6: Plot
 plots/F4panelF.pdf : ../shared-scripts/plotting/top-vs-concordance.R data/concordances/r3.txt data/panelF-precursors-calc.txt data/concordances/control-data.txt ../shared-scripts/plotting/mytheme.R ../shared-scripts/plotting/repositionlabel.R | plots
-	Rscript $< data/concordances/r3.txt data/panelF-precursors-calc.txt data/concordances/control-data.txt 800 3 $@
+	@echo "Plotting Figure 4F." && Rscript $< data/concordances/r3.txt data/panelF-precursors-calc.txt data/concordances/control-data.txt 800 3 $@
 
 
 clean-panelF : 
@@ -405,47 +408,47 @@ clean-panelF :
 
 # Auxiliary targets
 latex-clean : | latex
-	cd latex && rm -f *.aux *.log *.pdf	
+	@cd latex && rm -f *.aux *.log *.pdf	
 	
 data : 
-	mkdir -p data 
+	@mkdir -p data 
 	
 data/graphs :
-	mkdir -p $@
+	@mkdir -p $@
 
 data/concordances :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/fixtest-repertoires : 
-	mkdir -p $@
+	@mkdir -p $@
 
 data/fixtest-repertoires/languages/contiguous :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/fixtest-repertoires/languages/trainsets :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/repertoires : 
-	mkdir -p $@
+	@mkdir -p $@
 
 data/repertoires/languages/contiguous :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/repertoires/languages/trainsets :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/testsets :
-	mkdir -p $@
+	@mkdir -p $@
 	
 data/mkfiles :
-	mkdir -p $@
+	@mkdir -p $@
 	
 	
 progress :
-	mkdir -p $@
+	@mkdir -p $@
 	
 plots :
-	mkdir -p plots
+	@mkdir -p plots
 
 clean: latex-clean
-	rm -rf data && rm -rf plots && rm -rf progress
+	@rm -rf data && rm -rf plots && rm -rf progress

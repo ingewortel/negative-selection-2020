@@ -210,7 +210,7 @@ concordances <- function(string.data, rvalue, selfclass ){
 	rownames(out.data) <- NULL
 	out.data$n <- as.character( table( classes )[ as.character( out.data$class ) ] )
 	
-	print(out.data)
+	#print(out.data)
  	return(out.data)
 }
 
