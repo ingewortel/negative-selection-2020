@@ -12,73 +12,72 @@
 \begin{document}
 \scriptsize
 
-%---------------------------------FIGURE 5 : PEPTIDES ---------------------------------
+%---------------------------------FIGURE 6: PEPTIDE SELECTION---------------------------------
+
 
 \begin{tikzpicture}[anchor=north west]
-\clip (0,0) rectangle (12,-10.3);
+\clip (0,0.3) rectangle (12,-6.5);
 
-\begin{scope}[]
-	\begin{scope}[yshift=-1cm]
-  	\node[anchor=north west,scale=0.25] (peps) at (1.4,-0.7) {\includegraphics{../plots/F5panelA.pdf}};
-  	\node[anchor=west] at (0.2,-0.9) {TCR};
-  	\node[anchor=west] at (0.2,-1.3) {peptide};
-	\node[anchor=west] at (0.2,-0.5) {Peptide AIS:};
+
+\begin{scope}
+
+  \node[anchor=north west,align=left] (he) at (0.2,-0.3) {highly\\exchangeable};
+  \draw[-stealth] (0.95,-0.95) -- +(0.2,-0.2);
+
+  \node[anchor=north east,align=right] at (3.3, 0.05) {slightly\\exchangeable};
+  \draw[-stealth] (2.80,-0.6) -- +(-0.2, -0.2);
+
+  \node[anchor=north east] at (3.3,-2.53) {not exchangeable};
+  \draw[-stealth] (3.05,-2.53) -- +(-0.2,0.2);
+  
+  \node[scale=0.3] at (0.8,-0.7) {\includegraphics{../cartoons/clusters.pdf}};
+  \node at (0,0.3) {\figf A};
+
+
+\end{scope}
+
+\begin{scope}[xshift=4.1cm]
+	\node[scale=0.75] at (0,0) {\includegraphics{../../sems/Fig5B.pdf}};
+	\filldraw[white] (0.6,-2.5) rectangle (4.1,-2.9);
+	\node[anchor=north] at (2.5, -2.5) {x1000 training peptides};
+
+	\node[anchor = north west] (R) at (1.9,-0.9) {random};
+	\draw[-stealth] (R.west) -- +(-0.2,0.2);
+	\node[anchor = north west] (O) at (1.18,-0.1) {optimal};
+	\draw[-stealth] (1.28,-0.43) -- +(0.2,-0.2);
+	\node at (0,0.3) {\figf B};
+\end{scope}
+
+\begin{scope}[xshift=8.1cm]
+  \node[scale=0.75] at (0,0) {\includegraphics{../../figure-exchangeability/plots/train-exchangeability.pdf}};
+  \node at (0,0.3) {\figf C};
+\end{scope}
+
+
+
+\begin{scope}[xshift=0cm,yshift=-3.1cm]
+  \begin{scope}[xshift=0cm]
+  \node[scale=0.75] at (0,-0.3) {\includegraphics{../../sems/Fig5D.pdf}};
+  \filldraw[white] (0.6,-2.8) rectangle (4.2,-3.2);
+  \node[anchor=north] at (2.6, -2.8) {x1000 training peptides};
+  \node[anchor=north west](O) at (3.0,-0.55) {optimal};
+  \node[anchor=north west](R) at (3.0,-1.63){random};
   \end{scope}
-
-
-  \node at (0,0) {\figf  A};
-\end{scope}
-
-\begin{scope}[xshift=4.5cm]
-  	\node[scale=0.75] at (3.9, -0.5) {\includegraphics{../plots/F5panelB-lang.pdf}}; %(0.2,-0.5)
-	\node[scale=0.75] at (0.2, -0.3) {\includegraphics{../.plots/F5panelB-peps-r4.pdf}}; %(3,-0.3)
-	\node[anchor=north, align=center] at (6,-0.1) {English vs\\other languages};
-	\node[anchor=north, align=center] at (2.75,-0.1) {Self vs\\foreign peptides};
-	\node at (0,0) {\figf B};
-\end{scope}
-
-\begin{scope}[yshift=-4.0cm]
-  \node[anchor = north west, scale=0.027] at (0.1,-0.2) {\includegraphics{../plots/F5panelC.pdf}};
-  %legend
-  \begin{scope}[xshift=0.4cm,yshift=-5cm]
-	\filldraw[lightgray] (0,0) circle (0.4mm);
-	\filldraw[lightgray] (0.4,0) circle (0.4mm);
-	\draw[lightgray] (0,0) -- +(0.4,0);
-	\node[anchor=west] at (0.5,0) {self-self neighbors};
-	
-	\draw[black] (0,-0.3) -- +(0.4,0);
-	\filldraw[lightgray] (0, -0.3) circle (0.4mm);
-	\filldraw[hivc] (0.36, -0.34) rectangle +(0.08,0.08);
-	\node[anchor=west] at (0.5,-0.3) {self-HIV neighbors };
-
-  \end{scope}
-
-  \node at (0,0) {\figf C};
-\end{scope}
-
-\begin{scope}[yshift=-4.0cm, xshift=4.5cm]
-  \node[scale=0.75] at (3.5,-0.3) {\includegraphics{../plots/F5panelD-r3.pdf}};
-  \node[scale=0.75] at (0.15,-0.3) {\includegraphics{../plots/F5panelD-r4.pdf}};
-  \node[anchor=north] at (2.7,-0.3) {t = 4};
-  \node[anchor=north] at (6.0,-0.3) {t = 3};
-  \filldraw[white] (0.6,-2.8) rectangle (7.55,-3.2);
-  \node[anchor=north] at (4.4, -2.8) {x1000 training peptides};
   \node at (0,0) {\figf  D};
+
 \end{scope}
 
-\begin{scope}[yshift=-7cm, xshift=4.5cm]
-	\node[scale=0.75] at (3.5,-0.3) {\includegraphics{../plots/F5panelE-t3.pdf}}; 
-	\node[scale=0.75] at (0.15,-0.3) {\includegraphics{../plots/F5panelE-t4.pdf}};
-  \node[anchor=north] at (2.7,-0.3) {t = 4};
-  \node[anchor=north] at (6,-0.3) {t = 3};
-  \node[hivc, anchor=north east] at (4,-1.8) {HIV TCRs};
-  \node[selfc, align=left ] at (1.35,-1.8) {self\\TCRs};
-  \filldraw[white] (0.6,-2.8) rectangle (7.55,-3.2);
-  \node[anchor=north] at (4.4, -2.8) {x1000 training peptides};
-
+\begin{scope}[yshift=-3.1cm,xshift=4.1cm]
+  \node[scale=0.75] at (0,-0.3) {\includegraphics{../../figure-exchangeability/plots/exch-vs-foreign-binned.pdf}};
   \node at (0,0) {\figf  E};
 \end{scope}
 
+
 \end{tikzpicture}
+
+
+
+
+
 
 \end{document}
