@@ -20,7 +20,7 @@ figure6.pdf : latex/figure6.pdf
 
 latex/figure6.pdf : latex/figure6.tex ../shared-scripts/latex/figure-preamble.tex \
 	cartoon-panels simulation-panels
-	@cd latex && pdflatex figure6.tex#> texlog.log
+	@cd latex && pdflatex figure6.tex> texlog.log
 
 
 # These are the simulation plots to generate
