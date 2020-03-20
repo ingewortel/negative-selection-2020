@@ -76,7 +76,7 @@ data/concordances/peps-r4.txt : ../shared-scripts/analysis/compute-concordance.R
 # Step 5: Compute concordances for the "self"
 data/control-data-r4.txt : ../shared-scripts/analysis/peps-analyze-control.R \
 	../shared-scripts/analysis/concordance-functions2.R progress/panelB-pep-control 
-	@Rscript $< "data/peps-concordance/out-sim" $(nsim_control) 4 $@
+	@echo "...Computing peptide control concordances (part 2)" && Rscript $< "data/peps-concordance/out-sim" $(nsim_control) 4 $@
 
 progress/panelB-pep-control : ../shared-scripts/analysis/peps-concordance-control.sh $(trainset)
 	@echo "...Computing peptide control concordances" && bash $< $(trainset) $(nsim_control) && touch $@
