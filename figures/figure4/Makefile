@@ -371,10 +371,11 @@ data/mkfiles/analysis-panelF.mk : ../shared-scripts/analysis/analyze-precursors-
 
 # Step 5: Repeat but with extra simulations for the "control" (english versus more english).
 # We do extra simulations to see that this point really ends up at 0.5.
-data/concordances/control-data.txt : ../shared-scripts/analysis/lang-analyze-control.R ../shared-scripts/analysis/concordance-functions2.R progress/panelF-controlsims
+data/concordances/control-data.txt : ../shared-scripts/analysis/lang-analyze-control.R \
+	../shared-scripts/analysis/concordance-functions2.R progress/panelF-controlsims
 	Rscript $< "data/lang-concordance/out-sim" $(nsim_control) 3 $@
 
-progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | progress
+progress/panelF-controlsims : $(shell for i in $$(seq 1 $(nsim_control)); do echo data/lang-concordance/out-sim$$i.txt; done) | data/concordances progress
 	touch $@
 	
 data/lang-concordance/out-sim%.txt : ../shared-scripts/analysis/lang-concordance-control.sh \
