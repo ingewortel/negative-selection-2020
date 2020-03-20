@@ -60,16 +60,19 @@ sudo apt-get install libfst-dev
 
 #### 3 Install Graphviz
 
-The graph visualizations in figures 4 and 5 require Graphviz. On Mac OS X, install this using homebrew:
+The graph visualizations in figures 4 and 5 require Graphviz and rsvg-convert. 
+On Mac OS X, install this using homebrew:
 
 ```
 brew install graphviz
+brew install librsvg
 ```
 
 On Linux:
 
 ```
 sudo apt-get install graphviz
+sudo apt-get install librsvg2-bin
 ```
 
 

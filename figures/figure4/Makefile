@@ -65,7 +65,7 @@ progress/panelA-test-all : progress/panelA-test-xh progress/panelA-test-self | p
 # (so they are not generated automatically anymore).
 # First create the training sets for t=1, then just use the same ones for other t values:
 progress/panelA-train-r1 : progress/panelA-test-all | data/fixtest-repertoires/languages/trainsets progress
-	@for sim in $$(seq 1 $(NSIM) ) ; do \
+	@echo "Generating train sets for Figure 4A" && for sim in $$(seq 1 $(NSIM) ) ; do \
 		bash ../shared-scripts/repertoires/foreign_unseen.sh data/testsets/all-sim$$sim.txt $(trainset) data/fixtest-repertoires/languages/trainsets/tmp-sim$$sim.txt && \
 		for n in $(lang_selfsizes) ; do \
 			bash ../shared-scripts/repertoires/train-epitopes.sh data/fixtest-repertoires/languages/trainsets/tmp-sim$$sim.txt $$n > data/fixtest-repertoires/languages/trainsets/traineps-r1-R-n$$n-sim$$sim.txt ;\
@@ -83,7 +83,7 @@ data/mkfiles/panelA-repertoires.mk : ../shared-scripts/repertoires/loop-repertoi
 	@bash $< $(trainset) "$(lang_selfsizes)" "3" $(MODELDIR) data/fixtest-repertoires/languages/contiguous -T "R" -S "1 $(NSIM)" -n 6 -m "contiguous" -l "-lang" > $@
 
 progress/panelA-repertoires :  data/mkfiles/panelA-repertoires.mk progress/panelA-train
-	@echo ".......Generating repertoires for Figure4A..." && $(MAKE) -f $< && touch $@
+	@echo "...Generating repertoires for Figure4A..." && $(MAKE) -f $< && touch $@
 
 
 # Step 3: Analyze precursor frequencies for the fixed self and xh test sets.
@@ -104,20 +104,20 @@ data/mkfiles/frequencies-panelA.mk : ../shared-scripts/analysis/loop-precursor-c
 progress/panelA-frequencies : data/mkfiles/frequencies-panelA.mk ../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/analysis/precursor-counts-persim-fixtest.sh \
 	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection-lang progress/panelA-repertoires
-	$(MAKE) -f $< && touch $@
+	@echo "...Counting precursors for Figure 4A" && $(MAKE) -f $< && touch $@
 
 # Step 4: TCR survival rates are computed from the precursor frequencies computed in the 
 # previous step.
 # For a given value of t, merge the data of self and xh. 
 data/tsurv-r%.txt : progress/panelA-frequencies
-	for n in $(lang_selfsizes) ; do \
+	@echo "...Merging TCR surivval data for Figure 4A" && for n in $(lang_selfsizes) ; do \
 		cat data/fixtest-pfout/contiguous/R/output-r$*-lang-all-n$$n-r$*.txt | awk -v n="$$n" -v r="$*" '{print $$0, n, r}' >> $@ ;\
 	done && touch $@
 
 
 # Step 5: plot the result.
 plots/F4panelA.pdf : ../shared-scripts/plotting/plot-tsurv2.R data/tsurv-r3.txt ../shared-scripts/plotting/mytheme.R | plots
-	Rscript $< data/tsurv-r3.txt $(NSIM) $(NTEST) "lang" $@
+	@echo "Plotting Figure 4A." && Rscript $< data/tsurv-r3.txt $(NSIM) $(NTEST) "lang" $@
 
 clean-panelA :
 	rm -f figure4.pdf latex/figure4.pdf progress/panelA* data/mkfiles/*panelA* data/testsets/xh-sim*.txt \
@@ -129,10 +129,10 @@ clean-panelA :
 # Step 1: generate the graph data (nodes and edges)
 # This does not actually involve simulations, so no dependencies except folders.
 data/graphs/gself-self.dot : ../shared-scripts/analysis/concgraph.py | data/graphs
-	python3 $< ../input-data/languages/en-unseen.txt ../input-data/languages/en2-unseen.txt 4 10 "big" > $@
+	@python3 $< ../input-data/languages/en-unseen.txt ../input-data/languages/en2-unseen.txt 4 10 "big" > $@
 	
 data/graphs/gself-foreign.dot : ../shared-scripts/analysis/concgraph.py | data/graphs
-	python3 $< ../input-data/languages/en-unseen.txt ../input-data/languages/xh-unseen.txt 4 10 "big" > $@
+	@python3 $< ../input-data/languages/en-unseen.txt ../input-data/languages/xh-unseen.txt 4 10 "big" > $@
 
 
 # Step 2: Build graph svg graphic from .dot file using graphviz program.
@@ -142,14 +142,14 @@ GRAPHVIZ_OPTS=-Nlabel="" -Nstyle=filled -Npenwidth=0.0 \
 	   -Gsize=14,14 -Grotate=90 -Goutputorder=edgesfirst -Gsplines=line
 	   
 plots/F4panelB-self.svg : data/graphs/gself-self.dot | plots
-	neato $(GRAPHVIZ_OPTS) -Tsvg -o $@ $<
+	@neato $(GRAPHVIZ_OPTS) -Tsvg -o $@ $<
 
 plots/F4panelB-xh.svg : data/graphs/gself-foreign.dot | plots
-	neato $(GRAPHVIZ_OPTS) -Tsvg -o $@ $<
+	@neato $(GRAPHVIZ_OPTS) -Tsvg -o $@ $<
 	
 # Step 3: convert svg graph to pdf
 plots/%.pdf : plots/%.svg
-	rsvg-convert $< -f pdf -o $@
+	@rsvg-convert $< -f pdf -o $@
 
 
 clean-panelB : 
@@ -166,7 +166,7 @@ data/graphs/example-foreign.txt : | data/graphs
 # Step 1: generate the graph data (nodes and edges)
 # This does not actually involve simulations, so no dependencies except folders.
 data/graphs/ex-r%.dot : ../shared-scripts/analysis/concgraph.py data/graphs/example-self.txt data/graphs/example-foreign.txt | data/graphs
-	python3 $< data/graphs/example-self.txt data/graphs/example-foreign.txt $* 1 "small" > $@
+	@python3 $< data/graphs/example-self.txt data/graphs/example-foreign.txt $* 1 "small" > $@
 
 # Step 2: Build graph svg graphic from .dot file using graphviz program.
 # some options for graphviz:
@@ -176,13 +176,13 @@ GRAPHVIZ_OPTS_SMALL=-Nlabel="" -Nshape=box -Npenwidth=0.0 -Nfontcolor=lightgray 
 	   -Goverlap=false -Gsize=4,4 -Goutputorder=edgesfirst -Gsplines=line
 
 plots/F4panelC-r1.svg : data/graphs/ex-r1.dot | plots
-	neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
+	@neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
 
 plots/F4panelC-r3.svg : data/graphs/ex-r3.dot | plots
-	neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
+	@neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
 
 plots/F4panelC-r6.svg : data/graphs/ex-r6.dot | plots
-	neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
+	@neato $(GRAPHVIZ_OPTS_SMALL) -Tsvg -o $@ $<
 	
 # Step 3: convert svg graph to pdf.
 # This is done automatically using the same rule as in panel B. 
