@@ -19,9 +19,10 @@ all : figure5.pdf
 figure5.pdf : latex/figure5.pdf
 	@cp $< $@
 
-latex/figure5.pdf : latex/figure5.tex ../shared-scripts/latex/figure-preamble.tex \
-	cartoon-panels simulation-panels
-	@cd latex && pdflatex figure5.tex#> texlog.log
+latex/figure5.pdf : latex/figure5.tex ../shared-scripts/latex/figure-preamble.tex cartoon-panels simulation-panels
+	@cd latex && pdflatex figure5.tex
+	
+#> texlog.log
 
 
 # These are the simulation plots to generate
@@ -55,7 +56,7 @@ data/concordances/lang-control-data.txt : | data/concordances
 plots/F5panelB-lang.pdf : ../shared-scripts/plotting/plot-concordance.R \
 	data/concordances/lang-r3.txt data/concordances/lang-control-data.txt \
 	../shared-scripts/plotting/mytheme.R | plots
-	@echo "Plotting Figure 5B for languages" Rscript $< data/concordances/lang-r3.txt data/concordances/lang-control-data.txt "lang" $@ && rm -f Rplots.pdf
+	@echo "Plotting Figure 5B for languages" && Rscript $< data/concordances/lang-r3.txt data/concordances/lang-control-data.txt "lang" $@ && rm -f Rplots.pdf
 
 
 # Step 3: Make a single file with 6mers from all pathogens to compute concordance on. 

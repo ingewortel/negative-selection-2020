@@ -149,7 +149,7 @@ data/exch-all.txt : ../shared-scripts/analysis/graph-exch.py $(trainset) ../inpu
 
 # Step 2: Plot figure.
 plots/F6panelC.pdf : ../shared-scripts/plotting/plot-exchangeability-compare.R \
-	data/exch-all.txt ../shared-scripts/plotting/mytheme.R | plots
+	data/exch-all.txt progress/greedy ../shared-scripts/plotting/mytheme.R | plots
 	@echo "Plotting Figure 6C" &&  Rscript $< data/exch-all.txt $(trainset) data/peptide-sets/greedy-r4.txt $@
 
 # ==================== PANEL D ================================================
