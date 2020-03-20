@@ -52,14 +52,18 @@ construct.problem <- function(rmermatrix,rvalue){
   list(rmermatrix=rmermatrix,M=M,s=solution)
 }
 
-neighbor.table <- function( string.data, rvalue ){
+neighbor.table <- function( string.data, rvalue,verbose=FALSE ){
 	
 	# get labels and peptides/strings
 	classes <- as.character( string.data$V1 )
 	strings <- as.character( string.data$V2 )
+	
+	if( verbose ) cat( "...Making rmermatrix\n" )
 
 	# Create the rmermatrix
 	rm <- make.rmermatrix( strings, rvalue )
+	
+	if( verbose ) cat( "...Making sparse matrix\n" )
 	
 	# Create the sparse matrix
 	M <- construct.problem( rm, rvalue )$M
@@ -74,8 +78,16 @@ neighbor.table <- function( string.data, rvalue ){
 	neighbors <- matrix(0, nrow = n.strings, ncol = n.classes )
 	colnames(neighbors) <- unique.classes
 
+	if( verbose ) cat( paste0("...analyzing ", nrow(M), " strings\n" ) )
+
 	# loop over strings, check neighbors and add them to table
 	for( s in 1:nrow(M) ){
+	
+		if( verbose ){
+			if( s %% 1000 == 0 ){
+				cat( paste0("\t\t\t string ", s, " of ", nrow(M), " \n" ) )
+			}
+		}
 
 		# First list the rmers of this string
     		rmers <- summary(M[s,,drop=FALSE])$j
@@ -174,7 +186,7 @@ neighbor.concordance <- function( neighbor.table, selfclass, foreignclass ){
 concordances <- function(string.data, rvalue, selfclass, verbose = FALSE ){
   
   	
-  	nt <- neighbor.table( string.data, rvalue )
+  	nt <- neighbor.table( string.data, rvalue, verbose )
 	save( nt, file = paste0( "data/concordances/neighbortable-r",rvalue,".Rdata" ) )
 	if( verbose ) print('...neighbor table generated')
 	classes <- nt$class

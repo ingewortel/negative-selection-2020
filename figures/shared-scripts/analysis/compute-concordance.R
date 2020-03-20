@@ -3,7 +3,6 @@ source("../shared-scripts/analysis/concordance-functions2.R")
 
 argv <- commandArgs( trailingOnly = TRUE )
 
-print(argv)
 
 testepdir <- argv[1]
 rvalue <- as.numeric( argv[2] )
