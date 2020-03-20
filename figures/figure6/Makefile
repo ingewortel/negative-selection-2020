@@ -204,7 +204,7 @@ progress/panelD-frequencies-O-% : data/mkfiles/panelD-frequencies-%.mk progress/
 progress/panelD-frequencies-R : | progress data/pfout/contiguous/R
 	@echo "...Getting precursor frequencies from Figure 5 for random trainsets" &&\
 	cd ../figure5 && $(MAKE) progress/panelD-frequencies && \
-	cp data/pfout/contiguous/R/* ../figure6/data/pfout/contiguous/R/ &&\
+	cp data/pfout/contiguous/R/output* ../figure6/data/pfout/contiguous/R/ &&\
 	touch $@
 
 progress/panelD-frequencies : progress/panelD-frequencies-O-hiv progress/panelD-frequencies-O-self \
@@ -236,7 +236,7 @@ data/panelD-precursors-greedy-calc.txt : data/panelD-precursors-O-calc.txt data/
 # For this figure only t = 4.
 plots/F6panelD.pdf : ../shared-scripts/plotting/plot-top.R \
 	data/panelD-precursors-greedy-calc.txt ../shared-scripts/plotting/mytheme.R | plots
-	Rscript $< data/panelD-precursors-greedy-calc.txt 4 "hiv" "none" "peps" $@
+	Rscript $< data/panelD-precursors-greedy-calc.txt 4 "hiv" "sem" "peps" $@
 
 
 # ==================== PANEL E ================================================

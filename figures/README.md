@@ -118,10 +118,11 @@ brew install python
 ```
 
 This should also automatically install pip, the python package manager.
-We can then use pip to install the required networkx package:
+We can then use pip to install the required networkx/numpy packages:
 
 ```
 python3 -m pip install networkx
+python3 -m pip install numpy
 
 ```
 
