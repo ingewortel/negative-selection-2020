@@ -4,7 +4,7 @@
 
 MODELDIR=../shared-scripts/negselmodel/src
 pep_selfsizes=0 1 100 1000 5000 10000 25000 40000 55000 70000 100000 150000 200000 250000 260000
-NSIM=5
+NSIM=30
 NTEST=50
 trainset=../input-data/peptides/self-6mers.txt
 pathogens=hiv hepb hepc hcmv ebola zika mal lis vac
