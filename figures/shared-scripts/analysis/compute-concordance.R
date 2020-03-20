@@ -55,7 +55,6 @@ for( s in 1:nsim){
   
     # Read the file with strings
     d <- read.table( testepfile )
-    print('hi')
 
     sim.data <- concordances(d, rvalue, "self", verbose)
     print('hi2')
