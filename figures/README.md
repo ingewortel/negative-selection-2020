@@ -93,6 +93,7 @@ Then type the following to install the required packages:
 
 ```
 install.packages( "ggplot2" )
+install.packages( "data.table" )
 install.packages( "dplyr" )
 install.packages( "ggbeeswarm" )
 install.packages( "Matrix" )
