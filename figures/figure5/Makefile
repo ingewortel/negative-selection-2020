@@ -174,7 +174,7 @@ progress/panelD-frequencies : progress/panelD-frequencies-hiv progress/panelD-fr
 data/mkfiles/panelD-analysis.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
 	progress/panelD-frequencies | data/mkfiles
 	@bash $< data/pfout/contiguous/R "$(pep_selfsizes)" "$(rvec)" "hiv" "$(NSIM)" \
-		"data/panelD-precursors" -l "-lang" > $@
+		"data/panelD-precursors" > $@
 
 # This file is produced by the makefile, by analyzing all the separate trainsets and merging
 # the results:
