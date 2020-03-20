@@ -63,7 +63,7 @@ plots/F5panelB-lang.pdf : ../shared-scripts/plotting/plot-concordance.R \
 # simulation of negative selection or any sampling of "training strings".
 data/concordances/all-6mers.txt : $(trainset) $(foreach p,$(pathogens),../input-data/peptides/$(p)-6mers.txt) | data/concordances
 	@cat $< | awk '{print "self", $$1}' > $@ ;\
-	for p in $(peptides); do \
+	for p in $(pathogens); do \
 		cat ../input-data/peptides/$$p-6mers.txt | awk -v p=$$p '{print p, $$1}' >> $@ ;\
 	done
 
