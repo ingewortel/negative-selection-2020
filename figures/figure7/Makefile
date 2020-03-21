@@ -113,6 +113,16 @@ data/mkfiles/panelB-frequencies-hiv-B5.mk : ../shared-scripts/analysis/loop-prec
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+data/mkfiles/panelB-frequencies-self2-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/self2-6mers.txt progress/panelB-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		../input-data/peptides/self2-6mers.txt "self2" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
+		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+data/mkfiles/panelB-frequencies-self2-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/self2-6mers.txt progress/panelB-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		../input-data/peptides/self2-6mers.txt "self2" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
+		"$(pathogens)" -n 6 -m "contiguous" -u > $@
 
 # Use these makefiles to generate the actual files with motifs/test string. The progress/X
 # files just indicate that the step has been completed, while the actual data
