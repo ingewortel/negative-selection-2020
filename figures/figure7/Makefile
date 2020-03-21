@@ -104,27 +104,26 @@ data/mkfiles/panelB-frequencies-self-B5.mk : ../shared-scripts/analysis/loop-pre
 		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
 data/mkfiles/panelB-frequencies-%-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
-	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
+	../input-data/peptides/$*-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
+		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
 data/mkfiles/panelB-frequencies-%-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
-	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
+	../input-data/peptides/$*-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
+		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
 
 # Use these makefiles to generate the actual files with motifs/test string. The progress/X
 # files just indicate that the step has been completed, while the actual data
 # will be stored in data/pfout/contiguous/R/. See also previous panel.
-progress/panelB-frequencies-%-B1 : data/mkfiles/panelB-frequencies-hiv-%.mk progress/panelB-repertoires \
+progress/panelB-frequencies-%-B1 : data/mkfiles/panelB-frequencies-%-B1.mk progress/panelB-repertoires \
 	../shared-scripts/analysis/precursor-counts-persim.sh \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
-	../shared-scripts/negselmodel/src/contiguous-negative-selection \
-	../shared-scripts/negselmodel/src/countpaths
+	$(MODELDIR)/contiguous-negative-selection $(MODELDIR)/countpaths
 	@echo "...Analyzing precursor frequencies for Figure 7B $* ..." && $(MAKE) -f $< && touch $@
 
-progress/panelB-frequencies-%-B5 : data/mkfiles/panelB-frequencies-hiv-%.mk progress/panelB-repertoires \
+progress/panelB-frequencies-%-B5 : data/mkfiles/panelB-frequencies-%-B1.mk progress/panelB-repertoires \
 	../shared-scripts/analysis/precursor-counts-persim.sh \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/negselmodel/src/contiguous-negative-selection \
