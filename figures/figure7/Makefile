@@ -62,7 +62,7 @@ plots/F7panelA.pdf : ../shared-scripts/plotting/plot-degree-vs-score-2.R \
 #
 # Step 1: Compute the biased sets of self-peptides.
 # First AA frequency scores
-data/aa-freq-scores.txt : scripts/aa-freq-score.R $(trainset)
+data/aa-freq-scores.txt : ../shared-scripts/trainset-sampling/aa-freq-score.R $(trainset)
 	Rscript $^ $@ "1 1 1 1 1 1"
 
 # Then compute peptide probability based on those.
