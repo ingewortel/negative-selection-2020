@@ -6,7 +6,7 @@ all : figureS4.pdf
 
 # ==================== FIGURE S4 ================================================
 # This code combines all panels into a single pdf for figure S4. 
-figureS6.pdf : latex/figureS4.pdf
+figureS4.pdf : latex/figureS4.pdf
 	@cp $< $@
 
 latex/figureS4.pdf : latex/figureS4.tex ../shared-scripts/latex/figure-preamble.tex \
