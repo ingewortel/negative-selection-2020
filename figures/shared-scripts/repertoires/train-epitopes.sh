@@ -83,7 +83,7 @@ else
 
 		# Biased epitope selection: use Rscript scripts/biased-sample-n.R
 		
-		Rscript scripts/biased-sample-n.R $TRAINSELF $NTRAIN $pow
+		Rscript ../shared-scripts/trainset-sampling/biased-sample-n.R $TRAINSELF $NTRAIN $pow
 
 	else 
 		echo "Unknown argument to TYPE (-T). Please choose either R (RANDOM),
