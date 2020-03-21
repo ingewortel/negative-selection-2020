@@ -1,0 +1,46 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------FIGURE S1: LANGUAGES---------------------------------
+\begin{tikzpicture}[anchor=north west]
+\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+
+\begin{scope}
+	\node[anchor=north west,scale=0.75] at (0.2,-0.1) {\includegraphics{../plots/SF1panelA.pdf}};
+	\node at (0,0) {\figf A};
+\end{scope}
+
+
+\begin{scope}[xshift=4cm]
+	\begin{scope}[xshift=0cm]
+	  \node[anchor=north west,scale=0.75] at (0.2,-0.1) {\includegraphics{../plots/SF1panelB.pdf}};
+	  \filldraw[white] (0.4,-0.3) rectangle +(0.3,-2.7);
+	  \node[anchor=center,rotate=90] at (0.55,-1.65) {motifs/million};
+  
+	  \node at (0,0) {\figf  B};
+	\end{scope}
+
+	\begin{scope}[xshift=6cm]
+	  \node[anchor=north west,scale=0.75] at (0.2,-0.1) {\includegraphics{../plots/SF1panelC.pdf}};
+	  \filldraw[white] (0.4,-0.3) rectangle +(0.3,-2.7);
+	  \node[anchor=center,rotate=90] at (0.55,-1.65) {motifs deleted (\%)};
+	  \node at (0,0) {\figf  C};
+	\end{scope}
+\end{scope}
+
+
+\end{tikzpicture}
+
+
+\end{document}
