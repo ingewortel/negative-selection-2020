@@ -103,15 +103,15 @@ data/mkfiles/panelB-frequencies-self-B5.mk : ../shared-scripts/analysis/loop-pre
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
-data/mkfiles/panelB-frequencies-%-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
-	../input-data/peptides/$*-6mers.txt progress/panelB-repertoires | data/mkfiles
+data/mkfiles/panelB-frequencies-hiv-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
+		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
-data/mkfiles/panelB-frequencies-%-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
-	../input-data/peptides/$*-6mers.txt progress/panelB-repertoires | data/mkfiles
+data/mkfiles/panelB-frequencies-hiv-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
+		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
 
 # Use these makefiles to generate the actual files with motifs/test string. The progress/X
