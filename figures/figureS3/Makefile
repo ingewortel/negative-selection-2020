@@ -103,10 +103,10 @@ progress/panelB-frequencies : progress/panelB-frequencies-self \
 # of different sizes (previous step) are here processed further to give median + IQR over 
 # the recognition of different test strings (but still in a single simulation for each ntrain). 
 # First again generate a makefile:
-data/mkfiles/panelD-analysis.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
-	progress/panelD-frequencies | data/mkfiles
-	@bash $< data/pfout/contiguous/R "$(pep_selfsizes)" "$(rvec)" "hiv" "$(NSIM)" \
-		"data/panelD-precursors" > $@
+data/mkfiles/panelB-analysis.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
+	progress/panelB-frequencies | data/mkfiles
+	@bash $< data/pfout/contiguous/R "$(pep_selfsizes)" "4" "$(pathogens)" "$(NSIM)" \
+		"data/panelB-precursors" > $@
 
 # This file is produced by the makefile, by analyzing all the separate trainsets and merging
 # the results:
