@@ -31,7 +31,7 @@ data/precursors-greedy-calc.txt : | data
 # Make the plot.
 plots/SF4.pdf : ../shared-scripts/plotting/plot-top.R \
 	data/precursors-greedy-calc.txt ../shared-scripts/plotting/mytheme.R | plots
-	Rscript $< data/precursors-greedy-calc.txt 3 "hiv" "sem" "peps" $@
+	Rscript $< data/precursors-greedy-calc.txt 3 "hiv" "sem" "peps" $@ && rm Rplots.pdf
 
 
 
