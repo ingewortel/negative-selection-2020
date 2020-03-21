@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------SUPPLEMENTARY FIGURE 6: OTHER PATHOGENS BIAS -------------
+
+
+\begin{tikzpicture}[anchor=north west]
+\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+
+
+\begin{scope}[yshift=0cm, xshift=0cm] %../../figure-peptide-selection/plots/top-bias-zika-r4.pdf
+  \node[scale=0.75] at (11.75,-0.3) {\includegraphics{../../sems/top-bias-zika-r4.pdf}};
+  \node[scale=0.75] at (7.90,-0.3) {\includegraphics{../../sems/top-bias-hcmv-r4.pdf}};
+  \node[scale=0.75] at (4.05,-0.3) {\includegraphics{../../sems/top-bias-hepc-r4.pdf}};
+  \node[scale=0.75] at (0.2,-0.3) {\includegraphics{../../sems/top-bias-hepb-r4.pdf}};
+
+  \node[scale=0.75] at (11.75,-3.1) {\includegraphics{../../sems/top-bias-lis-r4.pdf}};
+  \node[scale=0.75] at (7.9,-3.1) {\includegraphics{../../sems/top-bias-vac-r4.pdf}};
+  \node[scale=0.75] at (4.05,-3.1) {\includegraphics{../../sems/top-bias-ebola-r4.pdf}};
+  \node[scale=0.75] at (0.2,-3.1) {\includegraphics{../../sems/top-bias-mal-r4.pdf}};
+
+  %legend
+  \node[anchor=west] at (0.4,-7) {AA bias in training set:};
+  \draw (3.5,-7) -- +(0.6,0);
+  \node[anchor=west] at (4.5,-7) {No bias (random)};
+  \draw[dash pattern=on 3pt off 3pt] (3.5,-7.4) -- +(0.6,0);
+  \node[anchor=west] at (4.5,-7.4) {Weak bias for rare AAs};
+  \draw[dash pattern=on 1pt off 1.5pt] (3.5,-7.8) -- +(0.6,0);
+  \node[anchor=west] at (4.5,-7.8) {Strong bias for rare AAs};
+
+   % labels
+  \node[anchor=north] at (2.8,-0.3) {Hepatitis B};
+  \node[anchor=north] at (6.65,-0.3) {Hepatitis C};
+  \node[anchor=north] at (10.5,-0.3) {HCMV};
+  \node[anchor=north] at (14.35,-0.3) {Zika};
+
+  \node[anchor=north] at (2.8,-3.2) {Malaria};
+  \node[anchor=north] at (6.65,-3.2) {Ebola};
+  \node[anchor=north] at (10.5,-3.2) {Vaccinia};
+  \node[anchor=north] at (14.35,-3.2) {Listeria};
+
+  \filldraw[white] (0.6,-6.0) rectangle (17,-6.3);
+  \draw[-triangle 60] (1.37, -6.2) -- (16.2, -6.2);
+  \node[anchor=north] at (8.8, -6.3) {Training set size};
+
+\end{scope}
+
+
+\end{tikzpicture}
+
+
+
+\end{document}
