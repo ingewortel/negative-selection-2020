@@ -62,7 +62,7 @@ plots/F7panelA.pdf : ../shared-scripts/plotting/plot-degree-vs-score-2.R \
 #
 # Step 1: Compute the biased sets of self-peptides.
 # First AA frequency scores
-data/aa-freq-scores.txt : ../shared-scripts/trainset-sampling/aa-freq-score.R $(trainset)
+data/aa-freq-scores.txt : ../shared-scripts/trainset-sampling/aa-freq-score.R $(trainset2)
 	Rscript $^ $@ "1 1 1 1 1 1"
 
 # Then compute peptide probability based on those.
@@ -74,17 +74,33 @@ data/peptide-sets/pep-prob.txt : ../shared-scripts/trainset-sampling/biased-prob
 # We first make a Makefile in data/mkfiles/panelB-repertoires.mk
 # for generating the repertoires. This ensures that we can then
 # make all required repertoires in parallel. 
+#
+# Also make new 'random' repertoires with the same slightly smaller 
+# training set (for consistency with the self-other self figure). But note that the
+# results for the other pathogens are pretty much the same as when the entire self
+# trainset is used.
 data/mkfiles/panelB-repertoires-B%.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
 	data/peptide-sets/pep-prob.txt | \
 	data/repertoires/peptides/contiguous data/repertoires/peptides/trainsets data/mkfiles
 	@bash $< data/peptide-sets/pep-prob.txt "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		data/repertoires/peptides/contiguous -T "B" -S "1 $(NSIM)" -n 6 -m "contiguous" -b $* > $@
+		
+data/mkfiles/panelB-repertoires-R.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
+	$(trainset2) | \
+	data/repertoires/peptides/contiguous data/repertoires/peptides/trainsets data/mkfiles
+	@bash $< $(trainset2) "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
+		data/repertoires/peptides/contiguous -T "R" -S "1 $(NSIM)" -n 6 -m "contiguous" > $@
 
-# Actually make the repertoires for both the weak (B1) and strong (B5) bias
+# Actually make the repertoires for both the weak (B1) and strong (B5) bias, and for 
+# random selection (R)
 progress/panelB-repertoires-B% : data/mkfiles/panelB-repertoires-B%.mk | progress
 	@echo "...Generating repertoires for Figure7B..." && $(MAKE) -f $< && touch $@
+	
+progress/panelB-repertoires-R : data/mkfiles/panelB-repertoires-R.mk | progress
+	@echo "...Generating repertoires for Figure7B..." && $(MAKE) -f $< && touch $@
 
-progress/panelB-repertoires : progress/panelB-repertoires-B1 progress/panelB-repertoires-B5
+progress/panelB-repertoires : progress/panelB-repertoires-B1 \
+	progress/panelB-repertoires-B5 progress/panelB-repertoires-R
 	@touch $@
 
 # *** STEP 2: After generating the repertoires, we measure TCRs/test peptide.
@@ -93,26 +109,50 @@ progress/panelB-repertoires : progress/panelB-repertoires-B1 progress/panelB-rep
 # selected repertoires from the previous step and compares them to a sample of unseen
 # test peptides of size NTEST (which is set on top of this page). 
 # For this figure, we use r=3/r=4 but take all values of ntrain.
+# self:
+data/mkfiles/panelB-frequencies-self-R.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
+	progress/panelB-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		$(trainset2) "self" $(MODELDIR) $(NTEST) $(NSIM) "R" \
+		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		
 data/mkfiles/panelB-frequencies-self-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
 	progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
+		$(trainset2) "self" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		
 data/mkfiles/panelB-frequencies-self-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
 	progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
-		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
+		$(trainset2) "self" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+
+# hiv:
+data/mkfiles/panelB-frequencies-hiv-R.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "R" \
+		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		
 data/mkfiles/panelB-frequencies-hiv-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		
 data/mkfiles/panelB-frequencies-hiv-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/hiv-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/hiv-6mers.txt "hiv" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
 		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		
+# "other self"
+data/mkfiles/panelB-frequencies-self2-R.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
+	../input-data/peptides/self2-6mers.txt progress/panelB-repertoires | data/mkfiles
+	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
+		../input-data/peptides/self2-6mers.txt "self2" $(MODELDIR) $(NTEST) $(NSIM) "R" \
+		"$(pathogens)" -n 6 -m "contiguous" -u > $@		
 data/mkfiles/panelB-frequencies-self2-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/self2-6mers.txt progress/panelB-repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
@@ -127,32 +167,45 @@ data/mkfiles/panelB-frequencies-self2-B5.mk : ../shared-scripts/analysis/loop-pr
 # Use these makefiles to generate the actual files with motifs/test string. The progress/X
 # files just indicate that the step has been completed, while the actual data
 # will be stored in data/pfout/contiguous/R/. See also previous panel.
+progress/panelB-frequencies-%-R : data/mkfiles/panelB-frequencies-%-R.mk progress/panelB-repertoires \
+	../shared-scripts/analysis/precursor-counts-persim.sh \
+	../shared-scripts/analysis/precursor-frequencies-c.sh \
+	$(MODELDIR)/contiguous-negative-selection $(MODELDIR)/countpaths
+	@echo "...Analyzing precursor frequencies for Figure 7B $* R..." && $(MAKE) -f $< && touch $@
+
 progress/panelB-frequencies-%-B1 : data/mkfiles/panelB-frequencies-%-B1.mk progress/panelB-repertoires \
 	../shared-scripts/analysis/precursor-counts-persim.sh \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	$(MODELDIR)/contiguous-negative-selection $(MODELDIR)/countpaths
-	@echo "...Analyzing precursor frequencies for Figure 7B $* ..." && $(MAKE) -f $< && touch $@
+	@echo "...Analyzing precursor frequencies for Figure 7B $* B1..." && $(MAKE) -f $< && touch $@
 
-progress/panelB-frequencies-%-B5 : data/mkfiles/panelB-frequencies-%-B1.mk progress/panelB-repertoires \
+progress/panelB-frequencies-%-B5 : data/mkfiles/panelB-frequencies-%-B5.mk progress/panelB-repertoires \
 	../shared-scripts/analysis/precursor-counts-persim.sh \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
-	../shared-scripts/negselmodel/src/contiguous-negative-selection \
-	../shared-scripts/negselmodel/src/countpaths
-	@echo "...Analyzing precursor frequencies for Figure 7B $* ..." && $(MAKE) -f $< && touch $@
+	$(MODELDIR)/contiguous-negative-selection $(MODELDIR)/countpaths
+	@echo "...Analyzing precursor frequencies for Figure 7B $* B5..." && $(MAKE) -f $< && touch $@
 
 progress/panelB-frequencies : progress/panelB-frequencies-hiv-B1 progress/panelB-frequencies-self-B1 \
 	progress/panelB-frequencies-hiv-B5 progress/panelB-frequencies-self-B5 \
-	progress/panelB-frequencies-self2-B1 progress/panelB-frequencies-self2-B5
+	progress/panelB-frequencies-self2-B1 progress/panelB-frequencies-self2-B5 \
+	progress/panelB-frequencies-self2-R progress/panelB-frequencies-self-R \
+	progress/panelB-frequencies-hiv-R
 	@touch $@
 	
 # *** STEP 3: Further analyze the data; Precursor frequencies computed for training sets 
 # of different sizes (previous step) are here processed further to give median + IQR over 
 # the recognition of different test strings (but still in a single simulation for each ntrain). 
 # First again generate a makefile:
+data/mkfiles/panelB-analysis-R.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
+	progress/panelB-frequencies | data/mkfiles
+	@bash $< data/pfout/contiguous/R "$(pep_selfsizes)" "$(rvec)" "hiv self2" "$(NSIM)" \
+		"data/panelB-precursors-R" > $@
+		
 data/mkfiles/panelB-analysis-B1.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
 	progress/panelB-frequencies | data/mkfiles
 	@bash $< data/pfout/contiguous/B1 "$(pep_selfsizes)" "$(rvec)" "hiv self2" "$(NSIM)" \
 		"data/panelB-precursors-B1" > $@
+		
 data/mkfiles/panelB-analysis-B5.mk : ../shared-scripts/analysis/analyze-precursors-makeout.sh \
 	progress/panelB-frequencies | data/mkfiles
 	@bash $< data/pfout/contiguous/B5 "$(pep_selfsizes)" "$(rvec)" "hiv self2" "$(NSIM)" \
@@ -160,6 +213,9 @@ data/mkfiles/panelB-analysis-B5.mk : ../shared-scripts/analysis/analyze-precurso
 
 # This file is produced by the makefile, by analyzing all the separate trainsets and merging
 # the results:
+data/panelB-precursors-R-calc.txt : data/mkfiles/panelB-analysis-R.mk \
+	../shared-scripts/analysis/analyze-precursors3.R progress/panelB-frequencies
+	@echo "...Analyzing repertoires for Figure 7B" && $(MAKE) -f $< $@
 data/panelB-precursors-B1-calc.txt : data/mkfiles/panelB-analysis-B1.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/panelB-frequencies
 	@echo "...Analyzing repertoires for Figure 7B" && $(MAKE) -f $< $@
@@ -167,13 +223,6 @@ data/panelB-precursors-B5-calc.txt : data/mkfiles/panelB-analysis-B1.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/panelB-frequencies
 	@echo "...Analyzing repertoires for Figure 7B" && $(MAKE) -f $< $@
 	
-# Use the R file from figure 5
-data/panelB-precursors-R-calc.txt : | data
-	@echo "...Getting results of random trainsets from Figure 5" &&\
-	cd ../figure5 && $(MAKE) data/panelD-precursors-calc.txt && \
-	cp data/panelD-precursors-calc.txt ../figure6/data/panelB-precursors-R-calc.txt
-
-
 # Combine the results with random (R) and biased (B1/B5) sets into a single file:
 data/panelB-precursors-bias-calc.txt : data/panelB-precursors-B5-calc.txt \
 	data/panelB-precursors-B1-calc.txt data/panelB-precursors-R-calc.txt
@@ -190,6 +239,18 @@ plots/F7panelB-self2.pdf : ../shared-scripts/plotting/plot-top.R \
 	@echo "Plotting Figure 7B" && Rscript $< data/panelB-precursors-bias-calc.txt 4 "self2" "sem" "peps" $@
 
 
+
+# ==================== PANEL C ================================================
+# Analyzing all pathogens on the R/B1/B5 training sets. We repeat the above, but now
+# using the entire "self" trainset again.
+# The data for this figure will be generated in figure S6, since this plot just 
+# represents a single point of all those plots.
+
+
+
+
+
+
 # ==================== FOLDER STRUCTURE ================================================
 # This code automatically generates the required folders.
 
@@ -203,10 +264,6 @@ data :
 data/peptide-sets :
 	@mkdir -p $@
 	
-
-data/pfout/contiguous/R:
-	@mkdir -p $@
-
 	
 data/repertoires : 
 	@mkdir -p $@
