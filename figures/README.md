@@ -99,6 +99,7 @@ install.packages( "ggbeeswarm" )
 install.packages( "Matrix" )
 install.packages( "grid" )
 install.packages( "RColorBrewer" )
+install.packages( "scales" )
 ```
 If R asks you to select a CRAN mirror, you can just choose 1 or another of the listed
 numbers (preferably a location nearby).
