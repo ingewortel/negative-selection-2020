@@ -28,7 +28,7 @@ latex/figure7.pdf : latex/figure7.tex ../shared-scripts/latex/figure-preamble.te
 
 
 # These are the simulation plots to generate
-panels=panelA panelB-hiv panelB-self2
+panels=panelA panelB-hiv panelB-self2 panelC
 simulation-panels :$(foreach p, $(panels), plots/F7$(p).pdf)
 
 
