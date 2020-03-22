@@ -20,6 +20,15 @@ For example, the file "contiguous-fa.cpp" implements the so-called r-contiguous 
 
 ## Dependencies and installation
 
+First-time users can install dependencies from the `figures/` folder by typing:
+
+```
+make aux/setup
+```
+
+This should help you install the required dependencies automatically on most systems.
+If you run into problems, see below for details on how to install manually.
+
 #### 1 Install Make and other command line essentials
 
 We here use GNU Make to generate the figures automatically using all the code.
