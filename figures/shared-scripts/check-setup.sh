@@ -26,7 +26,7 @@ fi
 # check openfst
 checkOpenfst=$(command -v fstdifference | wc -l)
 
-if [ !$checkOpenfst -eq 1 ] ; then \
+if [ $checkOpenfst -neq 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have OpenFST installed! Please install before continuing."
 	echo ""
 	echo "	On linux, try:"
@@ -43,7 +43,7 @@ fi
 # check graphviz
 checkGraphviz=$(command -v neato | wc -l)
 
-if [ !$checkGraphviz -eq 1 ] ; then \
+if [ $checkGraphviz != 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have Graphviz installed! Please install before continuing."
 	echo ""
 	echo "	On linux, try:"
@@ -59,7 +59,7 @@ fi
 # check rsvg-convert
 checkRsvg=$(command -v rsvg-convert | wc -l)
 
-if [ !$checkRsvg -eq 1 ] ; then \
+if [ $checkRsvg != 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have rsvg-convert installed! Please install before continuing."
 	echo ""
 	echo "	On linux, try:"
@@ -77,7 +77,7 @@ fi
 # Check if R is installed
 Rinstall=$(command -v R | wc -l)
 
-if [ !$Rinstall -eq 1 ] ; then \
+if [ $Rinstall != 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have R installed! Please install R before continuing."
 	echo ""
 	echo "	On linux, try:"
