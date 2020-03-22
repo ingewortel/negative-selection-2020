@@ -24,7 +24,7 @@ figure7.pdf : latex/figure7.pdf
 
 latex/figure7.pdf : latex/figure7.tex ../shared-scripts/latex/figure-preamble.tex \
 	simulation-panels
-	@cd latex && pdflatex figure6.tex#> texlog.log
+	@cd latex && pdflatex figure7.tex
 
 
 # These are the simulation plots to generate
