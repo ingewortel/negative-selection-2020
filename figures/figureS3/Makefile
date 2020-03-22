@@ -118,7 +118,7 @@ data/panelB-precursors-calc.txt : data/mkfiles/panelB-analysis.mk \
 # *** STEP 4: Make the plot.
 plots/SF3panelB-%.pdf : ../shared-scripts/plotting/plot-top.R data/panelB-precursors-calc.txt \
 	../shared-scripts/plotting/mytheme.R | plots
-	@echo "Plotting Figure S3B $*" && Rscript $< data/panelB-precursors-calc.txt "$*" "sd" "peps" $@
+	@echo "Plotting Figure S3B $*" && Rscript $< data/panelB-precursors-calc.txt 4 "$*" "sd" "peps" $@
 
 
 
