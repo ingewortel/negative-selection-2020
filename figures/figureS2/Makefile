@@ -59,7 +59,7 @@ plots/SF2panelB.pdf : ../shared-scripts/plotting/plot-pf.R data/panelB-precursor
 # Step 1: get the data from Figure 5
 data/panelC-precursors-calc.txt : | data
 	@echo "...Getting analysis from Figure 5" && \
-	cd ../figure 5 $(MAKE) data/panelD-precursors-calc.txt && \
+	cd ../figure5 $(MAKE) data/panelD-precursors-calc.txt && \
 	cp data/panelD-precursors-calc.txt ../figureS2/data/panelC-precursors-calc.txt
 
 
