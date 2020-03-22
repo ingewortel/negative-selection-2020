@@ -1,0 +1,46 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------SUPPLEMENTARY FIGURE 2: MODEL FEATURES---------------------------------
+
+\begin{tikzpicture}[anchor=north west]
+\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+% panel A : cross-reactivity
+\begin{scope}
+  \node[anchor=north west,scale=1] at (0.1,-0.1) {\includegraphics{../plots/SF2panelA.pdf}};
+  \node at (0,0) {\figf  A};
+\end{scope}
+
+\begin{scope}[xshift=6.35cm]
+\node[anchor=north west,scale=0.75] at (-0.1,-0.5) {\includegraphics{../plots/SF2panelB.pdf}};
+  \node at (0,0) {\figf  B};
+
+\end{scope}
+
+
+\begin{scope}[yshift=0cm, xshift=10.5cm]
+  \node[scale=0.75] at (3.5,-0.3) {\includegraphics{../plots/SF2panelC-r3.pdf}};
+  \node[scale=0.75] at (0.15,-0.3) {\includegraphics{../plots/SF2panelC-r4.pdf}};
+  \node[anchor=north] at (2.7,-0.3) {t = 4};
+  \node[anchor=north] at (6.0,-0.3) {t = 3};
+  \filldraw[white] (0.6,-2.8) rectangle (7.55,-3.2);
+  \node[anchor=north] at (4.4, -2.8) {x1000 training peptides};
+  \node at (0.1,0) {\figf  C};
+\end{scope}
+
+
+\end{tikzpicture}
+
+
+\end{document}

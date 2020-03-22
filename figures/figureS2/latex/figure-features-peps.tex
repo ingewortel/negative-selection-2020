@@ -1,0 +1,55 @@
+
+\documentclass[tikz]{standalone}
+
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,fit,decorations.pathreplacing,arrows,positioning,backgrounds}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{graphicx}
+\usepackage{pxfonts}
+\usepackage[T1]{fontenc}
+\definecolor{hivc}{RGB}{24,116,205}
+\begin{document}
+\scriptsize
+
+\begin{tikzpicture}
+
+\begin{scope}[xshift=0cm]
+
+\node[anchor=south west,scale=0.75] at (0.2,-4.4) {\includegraphics{../plots/Fig-crossreactivity-peps.pdf}};
+
+\node[anchor=north west, align=left] at (1.1,-0.4) {\# peptides\\recognized};
+\node[anchor=north west, align=left] at (3.1,-0.4) {Fraction of peptides\\recognized};
+
+\draw[-triangle 60] (0.2,-1.33) -- +(0,-2.5);
+\node[anchor=south, rotate=90] at  (0.2,-2.6) {cross-reactivity};
+\draw[-triangle 60] (-0.4,-3.83) -- +(0,2.5);
+\node[anchor=south, rotate=90] at (-0.4,-2.6) {specificity};
+
+%\node at (0,0) {\figf C};
+
+% annotations cross-reactivity
+\begin{scope}[xshift=1.1cm]
+  \node[anchor=west] at (0,-1.37) {1};
+  \node[anchor=west] at (0,-1.85) {39};
+  \node[anchor=west] at (0,-2.33) {1,160};
+  \node[anchor=west] at (0,-2.81) {30,800};
+  \node[anchor=west] at (0,-3.29) {766,879};
+  \node[anchor=west] at (0,-3.76) {16,954,119};
+
+
+  \node[anchor=west] at (2,-1.37) {1 : 64,000,000};
+  \node[anchor=west] at (2,-1.85) {1 : 1,641,026};
+  \node[hivc,anchor=west] at (2,-2.33) {1 : 55,172};
+  \node[anchor=west] at (2,-2.81) {1 : 2,078};
+  \node[anchor=west] at (2,-3.29) {1 : 83};
+  \node[anchor=west] at (2,-3.76) {1 : 4};
+\end{scope}
+
+
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}
