@@ -137,6 +137,9 @@ data :
 data/repertoires/peptides/contiguous :
 	@mkdir -p $@
 	
+data/repertoires/peptides/trainsets :
+	@mkdir -p $@
+	
 data/mkfiles :
 	@mkdir -p $@
 	
