@@ -36,10 +36,13 @@ aux/csetup : aux/Rsetup
 aux/Rsetup : shared-scripts/Rsetup.R aux/Rpackages.txt
 	Rscript shared-scripts/Rsetup.R aux/Rpackages.txt && touch $@
 
-aux/Rpackages.txt : | aux
+aux/Rpackages.txt :  aux/basics s| aux
 	@echo Searching for used R packages... && \
 	grep -r "library(" shared-scripts | sed "s/library(/ /g" | awk '{print $$2}' | sed 's/[),\,]//g' | sort | uniq > $@  && \
 	grep -r "require(" shared-scripts | grep -v Rsetup.R |  sed 's/require(/ /g' | awk '{print $$2}' | sed 's/[),\,]//g' | sort | uniq >> $@
+
+aux/basics : | aux
+	bash shared-scripts/check-setup.sh && touch $@
 
 aux : 
 	mkdir -p $@

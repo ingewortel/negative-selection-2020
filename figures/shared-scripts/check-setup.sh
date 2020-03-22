@@ -121,6 +121,8 @@ if [ $checkNumpy != 1 ] ; then \
 			No ) echo "ERROR - Please install numpy before continuing." ; exit;;
 		esac
 	done
+else 
+	echo "** 	 - Numpy :	OK "
 fi
 
 checkNetworkx=$(echo $checkPythonPackages | grep networkx | wc -l)
@@ -133,6 +135,8 @@ if [ $checkNetworkx != 1 ] ; then \
 			No ) echo "ERROR - Please install networkx before continuing." ;exit;;
 		esac
 	done
+else 
+	echo "** 	 - Networkx :	OK "
 fi
 
 
