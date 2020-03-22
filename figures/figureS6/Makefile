@@ -136,7 +136,8 @@ progress/frequencies-%-B5 : data/mkfiles/frequencies-%-B5.mk progress/repertoire
 	$(MODELDIR)/contiguous-negative-selection $(MODELDIR)/countpaths
 	@echo "...Analyzing precursor frequencies for Figure S6 $* B5..." && $(MAKE) -f $< && touch $@
 
-progress/frequencies : $(foreach p, $(pathogens), progress/frequencies-$(p)-R progress/frequencies-$(p)-B1 progress/frequencies-$(p)-B5)
+progress/frequencies : progress/frequencies-self-R progress/frequencies-self-B1 progress/frequencies-self-B5 \
+	$(foreach p, $(pathogens), progress/frequencies-$(p)-R progress/frequencies-$(p)-B1 progress/frequencies-$(p)-B5)
 	@touch $@
 	
 # *** STEP 3: Further analyze the data; Precursor frequencies computed for training sets 
