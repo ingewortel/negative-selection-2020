@@ -252,7 +252,7 @@ data/precursors-bias-calc.txt : | data
 
 plots/F7panelC.pdf : ../shared-scripts/plotting/plot-compare-pathogens.R \
 	data/precursors-bias-calc.txt ../shared-scripts/plotting/mytheme.R | plots
-	Rscript $< $*
+	Rscript $< 150000 data/precursors-bias-calc.txt $@
 
 
 
