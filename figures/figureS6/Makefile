@@ -167,7 +167,7 @@ data/precursors-R-calc.txt : data/mkfiles/analysis-R.mk \
 data/precursors-B1-calc.txt : data/mkfiles/analysis-B1.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/frequencies
 	@echo "...Analyzing repertoires for Figure S6" && $(MAKE) -f $< $@
-data/precursors-B5-calc.txt : data/mkfiles/analysis-B1.mk \
+data/precursors-B5-calc.txt : data/mkfiles/analysis-B5.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/frequencies
 	@echo "...Analyzing repertoires for Figure S6" && $(MAKE) -f $< $@
 	
