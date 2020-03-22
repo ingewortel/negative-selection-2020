@@ -23,3 +23,23 @@ figure5/figure5.pdf : figure4/figure4.pdf
 
 figure6/figure6.pdf : figure5/figure5.pdf
 	cd figure6 && $(MAKE)
+
+
+
+# Setup
+
+
+aux/csetup : aux/Rsetup
+	@echo Compiling C++ code in shared-scripts/negselmodel/src... &&\
+	cd shared-scripts/negselmodel/src && $(MAKE) && cd ../../.. && touch $@
+
+aux/Rsetup : shared-scripts/Rsetup.R aux/Rpackages.txt
+	Rscript shared-scripts/Rsetup.R aux/Rpackages.txt && touch $@
+
+aux/Rpackages.txt : | aux
+	@echo Searching for used R packages... && \
+	grep -r "library(" shared-scripts | sed "s/library(/ /g" | awk '{print $$2}' | sed 's/[),\,]//g' | sort | uniq > $@  && \
+	grep -r "require(" shared-scripts | grep -v Rsetup.R |  sed 's/require(/ /g' | awk '{print $$2}' | sed 's/[),\,]//g' | sort | uniq >> $@
+
+aux : 
+	mkdir -p $@

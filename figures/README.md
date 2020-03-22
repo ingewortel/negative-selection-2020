@@ -56,6 +56,7 @@ manager on Linux systems:
 
 ```
 sudo apt-get install libfst-dev
+sudo apt-get install libfst-tools
 ```
 
 #### 3 Install Graphviz
@@ -100,6 +101,7 @@ install.packages( "Matrix" )
 install.packages( "grid" )
 install.packages( "RColorBrewer" )
 install.packages( "scales" )
+install.packages( "methods" )
 ```
 If R asks you to select a CRAN mirror, you can just choose 1 or another of the listed
 numbers (preferably a location nearby).
@@ -146,16 +148,10 @@ in the Makefile.
 
 ## How to build the figures
 
-To build a figure, go inside a folder (eg `figure1/`) and type `make`:
 
-```
-cd figure1
-make
-```
-
-This will automatically build the figure. Note that simulations will be run for this and
+To make all figures, simply run `make` from the `figures/` folder. 
+Note that simulations will be run for this and
 this can take very long, so you may want to do it inside a `screen`.
-
 If you have multiple cores, you may try using them to run simulations in parallel; e.g.
 allow make to use 4 cores by saying:
 
@@ -163,5 +159,14 @@ allow make to use 4 cores by saying:
 make -j 4
 ```
 
-This should work, but if it doesn't, try `make clean` and `make` without the parallel
-option.
+To build a single figure, go inside a folder (eg `figure1/`) and type `make`:
+
+```
+cd figure1
+make
+```
+
+This will automatically build the figure.  Note that some
+figure use data from other figures, so it is possible that data will also be generated
+in the other folders.
+
