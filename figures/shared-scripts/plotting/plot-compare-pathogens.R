@@ -1,5 +1,5 @@
-library(ggplot2)
-suppressMessages(library(dplyr))
+library(ggplot2, warn.conflicts=FALSE)
+suppressMessages(library(dplyr, warn.conflicts=FALSE))
 source("../shared-scripts/plotting/mytheme.R")
 
 argv <- commandArgs( trailingOnly = TRUE )
