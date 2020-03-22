@@ -54,7 +54,7 @@ data/concordances-%.txt : progress/concordances
 plots/SF3panelA-%.pdf : ../shared-scripts/plotting/plot-concordance-rvalue.R \
 	data/concordances-%.txt  ../shared-scripts/plotting/mytheme.R | plots
 	@echo "Plotting Figure S3A"  && \
-	Rscript $< data/concordances-r$*.txt $@
+	Rscript $< data/concordances-$*.txt $@
 
 
 # ==================== PANEL B ================================================
