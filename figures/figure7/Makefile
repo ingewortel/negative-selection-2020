@@ -246,7 +246,13 @@ plots/F7panelB-self2.pdf : ../shared-scripts/plotting/plot-top.R \
 # The data for this figure will be generated in figure S6, since this plot just 
 # represents a single point of all those plots.
 
+data/precursors-bias-calc.txt : | data
+	@echo "...Getting data from figure S6" && \
+	cd ../figureS6 && $(MAKE) $@ && cp $@ ../figure7/data/precursors-bias-calc.txt
 
+plots/F7panelC.pdf : ../shared-scripts/plotting/plot-compare-pathogens.R \
+	data/precursors-bias-calc.txt ../shared-scripts/plotting/mytheme.R | plots
+	Rscript $< $*
 
 
 
