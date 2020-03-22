@@ -60,10 +60,12 @@ data/mkfiles/repertoires-B%.mk : ../shared-scripts/repertoires/loop-repertoires-
 progress/repertoires-B% : data/mkfiles/repertoires-B%.mk | progress
 	@echo "...Generating repertoires for Figure7B..." && $(MAKE) -f $< && touch $@
 	
-progress/repertoires-R : | progress data/repertoires/peptides/contiguous
+progress/repertoires-R : | progress data/repertoires/peptides/contiguous \
+	data/repertoires/peptides/trainsets
 	@echo "...Getting repertoires from Figure 5..." && \
 	cd ../figure5 && $(MAKE) progress/panelD-repertoires && \
 	cp data/repertoires/peptides/contiguous/* ../figureS6/data/repertoires/peptides/contiguous/ && \
+	cp data/repertoires/peptides/trainsets/* ../figureS6/data/repertoires/peptides/trainsets/ && \
 	touch $@
 
 progress/repertoires : progress/repertoires-B1 progress/repertoires-B5 progress/repertoires-R
