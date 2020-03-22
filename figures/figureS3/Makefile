@@ -61,10 +61,12 @@ plots/SF3panelA-%.pdf : ../shared-scripts/plotting/plot-concordance-rvalue.R \
 # pathogens: discrimination curves for pathogens other than hiv.
 
 # Step 1: get repertoires from figure 5D.
-progress/panelB-repertoires : | progress data/repertoires/peptides/contiguous
+progress/panelB-repertoires : | progress data/repertoires/peptides/contiguous \
+	data/repertoires/peptides/trainsets
 	@echo "...Copying repertoires from figure 5D" &&\
 	cd ../figure5 && $(MAKE) progress/panelD-repertoires && \
 	cp data/repertoires/peptides/contiguous/* ../figureS3/data/repertoires/peptides/contiguous/ && \
+	cp data/repertoires/peptides/trainsets/* ../figureS3/data/repertoires/peptides/trainsets/ && \
 	touch $@
 
 # Step 2: analyze precursor frequencies
