@@ -80,38 +80,38 @@ data/mkfiles/frequencies-self-R.mk : ../shared-scripts/analysis/loop-precursor-c
 	progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "R" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 		
 data/mkfiles/frequencies-self-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
 	progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 		
 data/mkfiles/frequencies-self-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh $(trainset) \
 	progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		$(trainset) "self" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 
 # rest
 data/mkfiles/frequencies-%-R.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/%-6mers.txt progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "R" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 		
 data/mkfiles/frequencies-%-B1.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/%-6mers.txt progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B1" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 		
 data/mkfiles/frequencies-%-B5.mk : ../shared-scripts/analysis/loop-precursor-counts-makeout.sh \
 	../input-data/peptides/%-6mers.txt progress/repertoires | data/mkfiles
 	@bash $< data/repertoires/peptides "$(pep_selfsizes)" "$(rvec)" \
 		../input-data/peptides/$*-6mers.txt "$*" $(MODELDIR) $(NTEST) $(NSIM) "B5" \
-		"$(pathogens)" -n 6 -m "contiguous" -u > $@
+		-n 6 -m "contiguous" -u > $@
 		
 # Use these makefiles to generate the actual files with motifs/test string. The progress/X
 # files just indicate that the step has been completed, while the actual data
