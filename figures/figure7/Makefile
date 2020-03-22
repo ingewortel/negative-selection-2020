@@ -219,7 +219,7 @@ data/panelB-precursors-R-calc.txt : data/mkfiles/panelB-analysis-R.mk \
 data/panelB-precursors-B1-calc.txt : data/mkfiles/panelB-analysis-B1.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/panelB-frequencies
 	@echo "...Analyzing repertoires for Figure 7B" && $(MAKE) -f $< $@
-data/panelB-precursors-B5-calc.txt : data/mkfiles/panelB-analysis-B1.mk \
+data/panelB-precursors-B5-calc.txt : data/mkfiles/panelB-analysis-B5.mk \
 	../shared-scripts/analysis/analyze-precursors3.R progress/panelB-frequencies
 	@echo "...Analyzing repertoires for Figure 7B" && $(MAKE) -f $< $@
 	
