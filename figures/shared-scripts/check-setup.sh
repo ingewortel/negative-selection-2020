@@ -26,7 +26,7 @@ fi
 # check openfst
 checkOpenfst=$(command -v fstdifference | wc -l)
 
-if [ $checkOpenfst -neq 1 ] ; then \
+if [ $checkOpenfst != 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have OpenFST installed! Please install before continuing."
 	echo ""
 	echo "	On linux, try:"
@@ -94,7 +94,7 @@ fi
 # Check if python 3 is installed
 pythonCheck=$(command -v python3 | wc -l )
 
-if [ !$pythonCheck -eq "1" ] ; then \
+if [ $pythonCheck != 1 ] ; then \
 	echo "ERROR - Your computer does not appear to have python3 installed! Please install python3 before continuing."
 	echo ""
 	echo "	On linux, try:"
@@ -113,7 +113,7 @@ fi
 checkPythonPackages=$(python3 -m pip list)
 checkNumpy=$(echo $checkPythonPackages | grep numpy | wc -l)
 
-if [ !$checkNumpy -eq 1 ] ; then \
+if [ $checkNumpy != 1 ] ; then \
 	echo "You don't have the python3 Numpy packages. Do you wish to install it?"
 	select yn in "Yes" "No"; do
 		case $yn in
@@ -125,7 +125,7 @@ fi
 
 checkNetworkx=$(echo $checkPythonPackages | grep networkx | wc -l)
 
-if [ !$checkNetworkx -eq 1 ] ; then \
+if [ $checkNetworkx != 1 ] ; then \
 	echo "You don't have the python3 networkx packages. Do you wish to install it?"
 	select yn in "Yes" "No"; do
 		case $yn in
