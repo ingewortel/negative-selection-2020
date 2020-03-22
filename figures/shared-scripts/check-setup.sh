@@ -94,7 +94,7 @@ fi
 # Check if python 3 is installed
 pythonCheck=$(command -v python3 | wc -l )
 
-if [ !$pythonCheck -eq 1 ] ; then \
+if [ !$pythonCheck -eq "1" ] ; then \
 	echo "ERROR - Your computer does not appear to have python3 installed! Please install python3 before continuing."
 	echo ""
 	echo "	On linux, try:"
