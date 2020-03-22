@@ -51,7 +51,7 @@ data/panelB-precursors-sim1.txt : | data
 	
 plots/SF2panelB.pdf : ../shared-scripts/plotting/plot-pf.R data/panelB-precursors-sim1.txt \
 	../shared-scripts/plotting/mytheme.R | plots
-	Rscript $< data/precursors-sim1.txt 4 "hiv" 1 $@ 20 "peps"
+	Rscript $< data/panelB-precursors-sim1.txt 4 "hiv" 1 $@ 20 "peps"
 
 # ==================== PANEL C ====================================================
 # This is the same data as in Figure 5D, but now plotted with SEM instead of SD.
