@@ -182,7 +182,8 @@ data/precursors-bias-calc.txt : data/precursors-B5-calc.txt \
 
 plots/SF6-%.pdf : ../shared-scripts/plotting/plot-top.R \
 	data/precursors-bias-calc.txt ../shared-scripts/plotting/mytheme.R | plots
-	@echo "Plotting Figure S6" && Rscript $< data/precursors-bias-calc.txt 4 "$*" "sem" "peps" $@
+	@echo "Plotting Figure S6" && Rscript $< data/precursors-bias-calc.txt 4 "$*" "sem" "peps" $@ &&\
+	rm -f Rplots.pdf
 
 
 # ==================== FOLDER STRUCTURE ================================================
