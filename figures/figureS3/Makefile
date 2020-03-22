@@ -37,7 +37,7 @@ data/all-6mers.txt : | data
 
 # Step 2: compute concordances for all thresholds t
 data/concordances-r%.txt : ../shared-scripts/analysis/compute-concordance.R \
-	../shared-scripts/analysis/concordance-functions2.R data/all-6mers.txt
+	../shared-scripts/analysis/concordance-functions2.R data/all-6mers.txt | data/concordances
 	Rscript $< data/all-6mers.txt $* 1 $@
 
 progress/concordances : $(foreach r, $(rvec), data/concordances-r$(r).txt) | progress
@@ -136,6 +136,10 @@ data/repertoires/peptides/contiguous :
 	@mkdir -p $@
 	
 data/mkfiles :
+	@mkdir -p $@
+	
+	
+data/concordances :
 	@mkdir -p $@
 
 progress : 
