@@ -22,6 +22,40 @@ else
 	echo "WARNING: Unknown system. Please ensure that you have basic command line tools (C compiler, make, ...) before continuing."
 fi
 
+# check latex
+checkLatex=$(command -v pdflatex | wc -l )
+checkLatexmk=$(command -v latexmk | wc -l )
+
+if [[ $checkLatex == 0 || $checkLatexmk == 0 ]] ; then \
+	echo "ERROR - Your computer does not appear to have latex (or all required packages) installed!"
+	echo "	 Please install before continuing, and ensure you have the commands 'pdflatex', 'latexmk', and latex packages such as tikz installed."
+	echo ""
+	echo "	On linux, try:"
+	echo "		sudo apt-get install texlive"
+	echo "		sudo apt-get install texlive-latex-extra"
+	echo "	On Mac OS X, try:"
+	echo "		brew cask install mactex"
+	exit 1
+else
+	echo "** 	Latex-etc :	OK "
+fi
+
+# check bc on linux (mac should have it)
+checkBc=$(command -v bc | wc -l )
+
+if [ $checkBc != 1 ] ; then \
+	echo "ERROR - Your computer does not appear to have bc installed! Please install before continuing."
+	echo ""
+	echo "	On linux, try:"
+	echo "		sudo apt-get install bc"
+	echo "	On Mac OS X, you should have bc by default. Please Google to find out what's wrong."
+	exit 1
+else
+	echo "** 	bc :		OK "
+fi
+
+
+
 
 # check openfst
 checkOpenfst=$(command -v fstdifference | wc -l)
