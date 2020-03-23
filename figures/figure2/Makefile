@@ -1,8 +1,10 @@
 all : figure2.pdf
 
+clean : 
+	rm -f figure2.pdf && $(MAKE) latex-clean
 
 latex-clean : | latex
-	cd latex && rm *.aux *.log *.pdf	
+	cd latex && rm -f *.aux *.log *.pdf	
 
 figure2.pdf : latex/figure2.pdf
 	cp $< $@

@@ -53,4 +53,4 @@ plots :
 	@mkdir -p plots
 
 clean: latex-clean
-	@rm -rf data && rm -rf plots 
+	@rm -rf data && rm -rf plots && rm -rf progress && rm -f figureS5.pdf

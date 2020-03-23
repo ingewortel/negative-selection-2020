@@ -6,12 +6,17 @@ all : all-figures
 figs=1 2 3 4 5 6 7 S1 S2 S3 S4 S5 S6
 
 
+clean-all : $(foreach f, $(figs), clean-figure-$(f))
+
+clean-figure-% :
+	cd figure$* && make clean
+
 all-figures : $(foreach f, $(figs), figure$(f)/figure$(f).pdf)
 
 figure1/figure1.pdf :
 	cd figure1 && $(MAKE)
 
-figureS2/figureS1.pdf : figure1/figure1.pdf
+figureS1/figureS1.pdf : figure3/figure3.pdf
 	cd figureS1 && $(MAKE)
 
 figure2/figure2.pdf : figure1/figure1.pdf

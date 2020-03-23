@@ -220,4 +220,4 @@ plots :
 	@mkdir -p plots
 
 clean: latex-clean
-	@rm -rf data && rm -rf plots && rm -rf progress
+	@rm -rf data && rm -rf plots && rm -rf progress && rm -f figureS6.pdf
