@@ -69,26 +69,51 @@ progress/panelB-train-peps-O-r% : ../shared-scripts/trainset-sampling/greedy-tra
 		done ;\
 	done && touch $@
 
+progress/panelB-train-peps-R-r% : progress/panelE-test-all | data/fixtest-repertoires/peptides/trainsets progress
+	@echo "...Making train sets.." && for sim in $$(seq 1 $(NSIM) ) ; do \
+		bash ../shared-scripts/repertoires/foreign_unseen.sh data/testsets/all-sim$$sim.txt $(trainset) data/fixtest-repertoires/peptides/trainsets/tmp-sim$$sim.txt && \
+		for n in $(pep_selfsizes) ; do \
+			bash ../shared-scripts/repertoires/train-epitopes.sh data/fixtest-repertoires/peptides/trainsets/tmp-sim$$sim.txt $$n > data/fixtest-repertoires/peptides/trainsets/traineps-r$*-R-n$$n-sim$$sim.txt ;\
+		done ;\
+	done && touch $@
+
 progress/panelB-train-peps-O : $(foreach r,$(rvec), progress/panelB-train-peps-O-r$(r) )
+	@touch $@
+	
+progress/panelB-train-peps-R : $(foreach r,$(rvec), progress/panelB-train-peps-R-r$(r) )
 	@touch $@
 
 
 # Step 4: Generate repertoires using these generated test sets.
-data/mkfiles/panelB-repertoires.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
+data/mkfiles/panelB-repertoires-O.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
 	progress/panelB-train-peps-O | data/fixtest-repertoires/peptides/contiguous \
 	data/fixtest-repertoires/peptides/trainsets data/mkfiles
 	@bash $< data/peptide-sets/greedy "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		data/fixtest-repertoires/peptides/contiguous -T "O" -S "1 $(NSIM)" -n 6 -m "contiguous" > $@
 
-progress/panelB-repertoires :  data/mkfiles/panelB-repertoires.mk progress/panelB-train-peps-O
+data/mkfiles/panelB-repertoires-R.mk : ../shared-scripts/repertoires/loop-repertoires-makeout.sh \
+	progress/panelB-train-peps-R | data/fixtest-repertoires/peptides/contiguous \
+	data/fixtest-repertoires/peptides/trainsets data/mkfiles
+	@bash $< $(trainset) "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
+		data/fixtest-repertoires/peptides/contiguous -T "R" -S "1 $(NSIM)" -n 6 -m "contiguous" > $@
+
+
+progress/panelB-repertoires-O :  data/mkfiles/panelB-repertoires-O.mk progress/panelB-train-peps-O
 	@echo "...Generating repertoires for Figure6B" && $(MAKE) -f $< && touch $@
 
+progress/panelB-repertoires-R :  data/mkfiles/panelB-repertoires-R.mk progress/panelB-train-peps-R
+	@echo "...Generating repertoires for Figure6B" && $(MAKE) -f $< && touch $@
 
 # Step 5: Analyze repertoires using generated test sets
-data/mkfiles/frequencies-panelB.mk : ../shared-scripts/analysis/loop-precursor-counts-fixtest-makeout.sh \
-	progress/panelB-repertoires | data/mkfiles
+data/mkfiles/frequencies-panelB-O.mk : ../shared-scripts/analysis/loop-precursor-counts-fixtest-makeout.sh \
+	progress/panelB-repertoires-O | data/mkfiles
 	@bash $< data/fixtest-repertoires/peptides "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		$(NSIM) "O" -n 6 -m "contiguous" > $@
+		
+data/mkfiles/frequencies-panelB-O.mk : ../shared-scripts/analysis/loop-precursor-counts-fixtest-makeout.sh \
+	progress/panelB-repertoires-R | data/mkfiles
+	@bash $< data/fixtest-repertoires/peptides "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
+		$(NSIM) "R" -n 6 -m "contiguous" > $@
 
 # Use the makefile above to generate the actual files with precursor frequencies.
 # They will be stored in data/fixtest-pfout/contiguous/O/. In the first step, a separate file
@@ -97,20 +122,18 @@ data/mkfiles/frequencies-panelB.mk : ../shared-scripts/analysis/loop-precursor-c
 # These will then be concatenated to a single file with all simulations for every
 # combination of t, language, and ntrain:
 #		data/fixtest-pfout/contiguous/O/output-r[t value]-peps-[pathogen]-n[ntrain]-r[t value].txt
-progress/panelB-frequencies-O : data/mkfiles/frequencies-panelB.mk \
+progress/panelB-frequencies-O : data/mkfiles/frequencies-panelB-O.mk \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/analysis/precursor-counts-persim-fixtest.sh \
 	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires
 	@echo "...Analyzing precursor frequencies for Figure 6B..." && $(MAKE) -f $< && touch $@
 
+progress/panelB-frequencies-R : data/mkfiles/frequencies-panelB-R.mk \
+	../shared-scripts/analysis/precursor-frequencies-c.sh \
+	../shared-scripts/analysis/precursor-counts-persim-fixtest.sh \
+	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires
+	@echo "...Analyzing precursor frequencies for Figure 6B..." && $(MAKE) -f $< && touch $@
 
-# The frequencies for random selection have already been computed in Figure 5, so copy
-# them here.
-progress/panelB-frequencies-R : | progress data/fixtest-pfout/contiguous/R
-	@echo "...Getting precursor frequencies from Figure 5 for random trainsets" &&\
-	cd ../figure5 && $(MAKE) progress/panelE-frequencies && \
-	cp data/fixtest-pfout/contiguous/R/* ../figure6/data/fixtest-pfout/contiguous/R/ &&\
-	touch $@
 
 progress/panelB-frequencies : progress/panelB-frequencies-R progress/panelB-frequencies-O
 	@touch $@
