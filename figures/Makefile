@@ -13,44 +13,49 @@ clean-figure-% :
 
 all-figures : $(foreach f, $(figs), figure$(f)/figure$(f).pdf)
 
-figure1/figure1.pdf :
-	cd figure1 && $(MAKE)
+
+progress : 
+	mkdir -p $@
+
+
+figure1/figure1.pdf : | progress
+	cd figure1 && $(MAKE) && touch ../progress/figure1
 
 figureS1/figureS1.pdf : figure3/figure3.pdf
-	cd figureS1 && $(MAKE)
+	cd figureS1 && $(MAKE) && touch ../progress/figureS1
 
 figure2/figure2.pdf : figure1/figure1.pdf
-	cd figure2 && $(MAKE)
+	cd figure2 && $(MAKE) && touch ../progress/figure2
 
 figure3/figure3.pdf : figure2/figure2.pdf
-	cd figure3 && $(MAKE)
+	cd figure3 && $(MAKE) && touch ../progress/figure3
 
 figure4/figure4.pdf : figure3/figure3.pdf
-	cd figure4 && $(MAKE)
+	cd figure4 && $(MAKE) && touch ../progress/figure4
 
 figure5/figure5.pdf : figure4/figure4.pdf
-	cd figure5 && $(MAKE)
+	cd figure5 && $(MAKE) && touch ../progress/figure5
 	
 figureS2/figureS2.pdf : figure5/figure5.pdf
-	cd figureS2 && $(MAKE)
+	cd figureS2 && $(MAKE) && touch ../progress/figureS2
 
 figureS3/figureS3.pdf : figure5/figure5.pdf
-	cd figureS3 && $(MAKE)
+	cd figureS3 && $(MAKE) && touch ../progress/figureS3
 
 figure6/figure6.pdf : figure5/figure5.pdf
-	cd figure6 && $(MAKE)
+	cd figure6 && $(MAKE) && touch ../progres/figure6
 
 figureS4/figureS4.pdf : figure6/figure6.pdf
-	cd figureS4 && $(MAKE)
+	cd figureS4 && $(MAKE) && touch ../progress/figureS4
 
 figureS5/figureS5.pdf : figure6/figure6.pdf
-	cd figureS5 && $(MAKE)
+	cd figureS5 && $(MAKE) && touch ../progress/figureS5
 
 figureS6/figureS6.pdf : figureS3/figureS3.pdf
-	cd figureS6 && $(MAKE)
+	cd figureS6 && $(MAKE) && touch ../progress/figureS6
 
 figure7/figure7.pdf : figure6/figure6.pdf figureS6/figureS6.pdf
-	cd figure7 && $(MAKE)
+	cd figure7 && $(MAKE) && touch ../progress/figure7
 
 
 # Setup
