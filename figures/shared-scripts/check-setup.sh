@@ -33,6 +33,7 @@ if [[ $checkLatex == 0 || $checkLatexmk == 0 ]] ; then \
 	echo "	On linux, try:"
 	echo "		sudo apt-get install texlive"
 	echo "		sudo apt-get install texlive-latex-extra"
+	echo "		sudo apt-get install latexmk"
 	echo "	On Mac OS X, try:"
 	echo "		brew cask install mactex"
 	exit 1
