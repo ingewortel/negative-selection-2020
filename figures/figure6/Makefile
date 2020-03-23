@@ -110,7 +110,7 @@ data/mkfiles/frequencies-panelB-O.mk : ../shared-scripts/analysis/loop-precursor
 	@bash $< data/fixtest-repertoires/peptides "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		$(NSIM) "O" -n 6 -m "contiguous" > $@
 		
-data/mkfiles/frequencies-panelB-O.mk : ../shared-scripts/analysis/loop-precursor-counts-fixtest-makeout.sh \
+data/mkfiles/frequencies-panelB-R.mk : ../shared-scripts/analysis/loop-precursor-counts-fixtest-makeout.sh \
 	progress/panelB-repertoires-R | data/mkfiles
 	@bash $< data/fixtest-repertoires/peptides "$(pep_selfsizes)" "$(rvec)" $(MODELDIR) \
 		$(NSIM) "R" -n 6 -m "contiguous" > $@
