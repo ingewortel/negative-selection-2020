@@ -125,13 +125,13 @@ data/mkfiles/frequencies-panelB-R.mk : ../shared-scripts/analysis/loop-precursor
 progress/panelB-frequencies-O : data/mkfiles/frequencies-panelB-O.mk \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/analysis/precursor-counts-persim-fixtest.sh \
-	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires
+	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires-O
 	@echo "...Analyzing precursor frequencies for Figure 6B..." && $(MAKE) -f $< && touch $@
 
 progress/panelB-frequencies-R : data/mkfiles/frequencies-panelB-R.mk \
 	../shared-scripts/analysis/precursor-frequencies-c.sh \
 	../shared-scripts/analysis/precursor-counts-persim-fixtest.sh \
-	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires
+	$(MODELDIR)/countpaths $(MODELDIR)/contiguous-negative-selection progress/panelB-repertoires-R
 	@echo "...Analyzing precursor frequencies for Figure 6B..." && $(MAKE) -f $< && touch $@
 
 
