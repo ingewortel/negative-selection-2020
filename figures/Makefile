@@ -43,7 +43,7 @@ figureS3/figureS3.pdf : figure5/figure5.pdf
 	cd figureS3 && $(MAKE) && touch ../progress/figureS3
 
 figure6/figure6.pdf : figure5/figure5.pdf
-	cd figure6 && $(MAKE) && touch ../progres/figure6
+	cd figure6 && $(MAKE) && touch ../progress/figure6
 
 figureS4/figureS4.pdf : figure6/figure6.pdf
 	cd figureS4 && $(MAKE) && touch ../progress/figureS4

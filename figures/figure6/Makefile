@@ -69,7 +69,7 @@ progress/panelB-train-peps-O-r% : ../shared-scripts/trainset-sampling/greedy-tra
 		done ;\
 	done && touch $@
 
-progress/panelB-train-peps-R-r% : progress/panelE-test-all | data/fixtest-repertoires/peptides/trainsets progress
+progress/panelB-train-peps-R-r% : progress/panelB-testsets | data/fixtest-repertoires/peptides/trainsets progress
 	@echo "...Making train sets.." && for sim in $$(seq 1 $(NSIM) ) ; do \
 		bash ../shared-scripts/repertoires/foreign_unseen.sh data/testsets/all-sim$$sim.txt $(trainset) data/fixtest-repertoires/peptides/trainsets/tmp-sim$$sim.txt && \
 		for n in $(pep_selfsizes) ; do \
