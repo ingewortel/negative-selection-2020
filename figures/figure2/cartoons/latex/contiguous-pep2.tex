@@ -1,0 +1,49 @@
+\documentclass[tikz]{standalone}
+\pagestyle{empty}
+
+\usepackage{tikz} %package for drawing figures
+\usetikzlibrary{positioning,calc,fit,decorations.pathreplacing,arrows,positioning,backgrounds}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{graphicx}
+\usepackage{pxfonts}
+
+\newcommand{\figf}{\sffamily\bfseries\small} %Defines the font used for the labelling of figure panels.
+
+
+\begin{document}
+\scriptsize
+%---------------------------------FIGURE 1: MODEL DESCRIPTION---------------------------------
+
+\begin{tikzpicture}[anchor=north west]
+
+
+%%--------panel A/B: TCR description and k-contiguous matching
+\begin{scope}[]
+  \begin{scope}[xshift=0cm,yshift=-0.3cm]
+  \node[anchor=north west,scale=0.3] at (1.4,-0.7) {\includegraphics{../plots/tcr-peps.pdf}};
+  \node[anchor=west] at (0.3,-0.95) {TCR};
+  \node[anchor=west] at (0.3,-1.4) {peptide};
+  \node[anchor=north] at (3.05,0) {binding motif};
+
+ \draw (2,-0.55) -- (2,-0.4) -- (4.15,-0.4) -- (4.15,-0.55);
+  \end{scope}
+
+\begin{scope}[xshift=5cm]
+  %\node at (0,0) {\figf  B};
+  \node[scale=0.25] (af4) at (0,0.3) {\includegraphics{../plots/contiguous_affinity4-peps.pdf}};
+  \node[below = 0.1 cm of af4.south ] {affinity = 4};
+
+  \node[scale=0.25] (af3) at (0,-1.5) {\includegraphics{../plots/contiguous_affinity2-peps.pdf}}; %(2.3,0)
+  \node[below = 0.1 cm of af3.south ] {affinity = 2};
+
+  %\node[scale=0.25] (af2) at (4.6,0) {\includegraphics{../plots/contiguous_affinity2.pdf}};
+  %\node[below = 0.1 cm of af2.south ] {affinity = 2};
+\end{scope}
+
+
+\end{scope}
+
+\end{tikzpicture}
+
+\end{document}

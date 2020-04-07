@@ -1,0 +1,82 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%---------------------------------SUPPLEMENTARY FIGURE 3: OTHER PATHOGENS ----------------
+\newpage 
+\begin{tikzpicture}[anchor=north west]
+\filldraw[white] (0,0) rectangle (17.92445,-0.1);
+
+\begin{scope}
+  \node[scale=0.75] at (12.4,-0.3) {\includegraphics{../plots/SF3panelA-zika.pdf}};
+  \node[scale=0.75] at (9.3,-0.3) {\includegraphics{../plots/SF3panelA-hcmv.pdf}};
+  \node[scale=0.75] at (6.20,-0.3) {\includegraphics{../plots/SF3panelA-hepc.pdf}};
+  \node[scale=0.75] at (3.10,-0.3) {\includegraphics{../plots/SF3panelA-hepb.pdf}};
+  \node[scale=0.75] at (0,-0.3) {\includegraphics{../plots/SF3panelA-hiv.pdf}};
+
+  \node[scale=0.75] at (12.4,-3.1) {\includegraphics{../plots/SF3panelA-lis.pdf}};
+  \node[scale=0.75] at (9.3,-3.1) {\includegraphics{../plots/SF3panelA-vac.pdf}};
+  \node[scale=0.75] at (6.20,-3.1) {\includegraphics{../plots/SF3panelA-ebola.pdf}};
+  \node[scale=0.75] at (3.10,-3.1) {\includegraphics{../plots/SF3panelA-mal.pdf}};
+
+  \node[anchor=north] at (2,-0.3) {HIV};
+  \node[anchor=north] at (5.1,-0.3) {Hepatitis B};
+  \node[anchor=north] at (8.2,-0.3) {Hepatitis C};
+  \node[anchor=north] at (11.3,-0.3) {HCMV};
+  \node[anchor=north] at (14.4,-0.3) {Zika};
+
+  \node[anchor=north] at (5.1,-3.2) {Malaria};
+  \node[anchor=north] at (8.2,-3.2) {Ebola};
+  \node[anchor=north] at (11.3,-3.2) {Vaccinia};
+  \node[anchor=north] at (14.4,-3.2) {Listeria};
+
+  \node at (0,0) {\figf  A};
+
+\end{scope}
+
+\begin{scope}[yshift=-6cm, xshift=0cm]
+  \node[scale=0.75] at (11.75,-0.3) {\includegraphics{../plots/SF3panelB-zika.pdf}};
+  \node[scale=0.75] at (7.90,-0.3) {\includegraphics{../plots/SF3panelB-hcmv.pdf}};
+  \node[scale=0.75] at (4.05,-0.3) {\includegraphics{../plots/SF3panelB-hepc.pdf}};
+  \node[scale=0.75] at (0.2,-0.3) {\includegraphics{../plots/SF3panelB-hepb.pdf}};
+
+  \node[scale=0.75] at (11.75,-3.1) {\includegraphics{../plots/SF3panelB-lis.pdf}};
+  \node[scale=0.75] at (7.9,-3.1) {\includegraphics{../plots/SF3panelB-vac.pdf}};
+  \node[scale=0.75] at (4.05,-3.1) {\includegraphics{../plots/SF3panelB-ebola.pdf}};
+  \node[scale=0.75] at (0.2,-3.1) {\includegraphics{../plots/SF3panelB-mal.pdf}};
+
+
+   % labels
+  \node[anchor=north] at (2.8,-0.3) {Hepatitis B};
+  \node[anchor=north] at (6.65,-0.3) {Hepatitis C};
+  \node[anchor=north] at (10.5,-0.3) {HCMV};
+  \node[anchor=north] at (14.35,-0.3) {Zika};
+
+  \node[anchor=north] at (2.8,-3.2) {Malaria};
+  \node[anchor=north] at (6.65,-3.2) {Ebola};
+  \node[anchor=north] at (10.5,-3.2) {Vaccinia};
+  \node[anchor=north] at (14.35,-3.2) {Listeria};
+
+  \filldraw[white] (0.6,-6.0) rectangle (17,-6.3);
+  \draw[-triangle 60] (1.37, -6.2) -- (16.2, -6.2);
+  \node[anchor=north] at (8.8, -6.3) {Training set size};
+  \node at (0,0) {\figf  B};
+\end{scope}
+
+
+
+\end{tikzpicture}
+
+
+
+\end{document}

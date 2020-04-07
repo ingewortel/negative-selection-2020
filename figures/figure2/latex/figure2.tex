@@ -1,0 +1,32 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+%-------------------------FIGURE 2: AIS MODELS--------------------------
+
+\begin{tikzpicture}[anchor=north west]
+\draw[white] (0,0) -- (12,0);
+	\begin{scope}[]
+ 		\node[anchor = north west] at (0.2,0) {\includegraphics{../cartoons/plots/contiguous-pep2.pdf}};
+  		\node at (0,0) {\figf  A};
+	\end{scope}
+
+	\begin{scope}[xshift=7.2cm]
+		\node[anchor = north west] at (0.3,-0.3) {\includegraphics{../cartoons/plots/contiguous_langvspeps3.pdf}};
+		\node at (0,0) {\figf B};
+	\end{scope}
+
+
+\end{tikzpicture}
+\end{document}

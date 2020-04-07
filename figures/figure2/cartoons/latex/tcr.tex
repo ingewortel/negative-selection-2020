@@ -1,0 +1,68 @@
+\documentclass[tikz]{standalone}
+
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc,fit,decorations.pathreplacing,arrows,positioning,backgrounds}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{graphicx}
+\usepackage{pxfonts}
+\usepackage[T1]{fontenc}
+
+
+%\definecolor{hivc}{cmyk}{0,0.80,0.83,0.13}                %\definecolor{hivc}{HTML}{DE2D26}
+\definecolor{hivc}{RGB}{24,116,205}
+\definecolor{selfc}{cmyk}{0,0,0,0.6}                      %\colorlet{selfc}{gray!80!white}
+
+
+\begin{document}
+
+
+\Huge
+
+
+\begin{tikzpicture}
+\colorlet{bgcol}{gray!15!white}
+\tikzstyle{tcr}=[anchor=center,text=white,font=\bfseries];
+\tikzstyle{eps}=[scale=1.3,anchor=south,text=black,font=\ttfamily];
+
+
+\begin{scope}
+      \foreach \x in {3.2,4.4,5.6,6.8,2,8}
+        \filldraw[hivc] (\x,-0.7) rectangle +(1,1.4);
+        %\filldraw[darkgray] (10,0) circle (7mm);
+        %\node[anchor=center,text=white] at (10,0) {\bf \emph{k}};
+
+        \node[tcr] (t1) at (2.5,0) {r};
+        \node[tcr] (t2) at (3.7,0) {a};
+        \node[tcr] (t3) at (4.9,0) {w};
+        \node[tcr] (t4) at (6.1,-0.3) {\_};
+        \node[tcr] (t5) at (7.3,0) {t};
+        \node[tcr] (t6) at (8.5,0) {h};
+     
+        %\node[eps] at (0.7,-2.5) {Y};   
+        %\node[eps] at (1.5,-2.5) {L};
+        \node[eps] at (2.5,-2.3) {r};
+        \node[eps] at (3.7,-2.3) {a};
+        \node[eps] at (4.9,-2.3) {w};
+        \node[eps] at (6.1,-2.3) {\_};
+        \node[eps] at (7.3,-2.3) {t};
+        \node[eps] at (8.5,-2.3) {h};
+        %\node[eps] at (9.5,-2.5) {V};
+
+        
+        %\draw[selfc,line width=2mm] (0.5,-3) -- (1.75,-3) -- (2.3,-2.5) -- (8.7,-2.5) -- (9.3,-3) -- (9.7,-3);
+        
+        
+        %\node [fit=(A) (B) (C)] (fit) {};              
+        %\draw [decorate,decoration={brace,amplitude=10mm},line width=1mm] (2,1.3) -- (9,1.3);
+        %\draw [line width = 1mm] (10,1.3) -- (10,2);
+        %\draw [line width=1mm] (5.5,2.3) -- (5.5,3.2);
+        
+\end{scope}
+
+
+\end{tikzpicture}
+
+\end{document}
+

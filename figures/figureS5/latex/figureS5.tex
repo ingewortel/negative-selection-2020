@@ -1,0 +1,32 @@
+\documentclass[tikz]{standalone}
+
+\input{../../shared-scripts/latex/figure-preamble.tex}
+
+
+%__________________________________________________________________________
+%__________________________________________________________________________
+%%----BEGINNING OF DOCUMENT
+%__________________________________________________________________________
+%__________________________________________________________________________
+
+\begin{document}
+\scriptsize
+
+
+%---------------------------------SUPPLEMENTARY FIGURE 5: AA ENRICHMENT -------------
+\newpage
+\begin{tikzpicture}[anchor=north west]
+
+\begin{scope}[yshift=0cm, xshift=0cm]
+  \clip (0,0) rectangle +(5,-4);
+  \node[scale=0.75] (aaplot) at (-0.2,-0.3) {\includegraphics{../plots/SF5.pdf}};
+  \node[rotate=90, anchor=center] at (0.28, -1.5) {AA enrichment};
+
+\end{scope}
+
+\end{tikzpicture}
+
+
+
+
+\end{document}
