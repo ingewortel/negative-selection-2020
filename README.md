@@ -6,8 +6,8 @@ sequences used in the paper (in the `data/` folder). See below for a description
 the README.md files in each of those folders. 
 
 All analyses are described in the methods section of the manuscript, so the content of the `model/` and `data/` folders
-should together suffice to reproduce all figures in the manuscript. For convenience, we will later also upload a complete folder
-with all (simulation, analysis and plotting) code that can be used to generate the figures automatically.
+should together suffice to reproduce all figures in the manuscript. For convenience, we have also uploaded a complete folder
+with all (simulation, analysis and plotting) code that can be used to generate the figures automatically under `figures/`. This folder has a separate README on how to reproduce all figures automatically. The information below provides a more general overview of the model and its usage.
 
 
 ## About the model
