@@ -1,9 +1,16 @@
 .SECONDARY:
 .DELETE_ON_ERROR:
 
-all : all-figures
+all : figures.pdf supp-figures.pdf
 
 figs=1 2 3 4 5 6 7 S1 S2 S3 S4 S5 S6
+
+mainfigs:1 2 3 4 5 6 7
+suppfigs:S1 S2 S3 S4 S5 S6
+
+
+
+
 
 
 clean-all : $(foreach f, $(figs), clean-figure-$(f))
@@ -12,6 +19,26 @@ clean-figure-% :
 	cd figure$* && make clean
 
 all-figures : $(foreach f, $(figs), figure$(f)/figure$(f).pdf)
+
+main-figures : $(foreach f, $(mainfigs), figure$(f)/figure$(f).pdf)
+supp-figures : $(foreach f, $(suppfigs), figure$(f)/figure$(f).pdf)
+
+
+
+figures.pdf : latex/figures.pdf
+	cp $< $@
+	
+latex/figures.pdf : latex/figures.tex  main-figures
+	cd latex && latexmk -pdf figures.tex ;\
+	latexmk -c
+
+supp-figures.pdf : latex/supp-figures.pdf
+	cp $< $@
+	
+latex/supp-figures.pdf : latex/supp-figures.tex  supp-figures
+	cd latex && latexmk -pdf supp-figures.tex ;\
+	latexmk -c
+
 
 
 progress : 
