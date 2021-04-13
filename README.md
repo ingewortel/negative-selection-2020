@@ -1,4 +1,5 @@
 # 2020-negative-selection
+[![DOI](https://zenodo.org/badge/140730506.svg)](https://zenodo.org/badge/latestdoi/140730506)
 
 This repository contains the simulation code for the manuscript "Is T Cell Negative Selection a Learning Algorithm?".
 It currently contains the code for the negative selection model itself (in the `model/` folder), as well as the 
